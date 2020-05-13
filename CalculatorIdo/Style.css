@@ -1,0 +1,22 @@
+body {
+    display: flex;
+    justify-content: center;
+    margin-top: 5em;
+    background-color: #3665f3;
+}
+
+#calc-container {
+    background-color: gray;
+}
+
+#result-line {
+    height: 4em;
+    width: 16.25em;
+    font-size: 2em;
+}
+
+.calc-button {
+    width: 4em;
+    height: 2em;
+    font-size: 2em;
+}
