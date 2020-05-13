@@ -6,6 +6,12 @@ body {
     font-family: "Market Sans", Arial, sans-serif;
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+    margin-left: 18em;
+}
+
 .vertical-line {
     display: inline-block;
 }
@@ -123,7 +129,6 @@ hr {
 }
 
 .titles {
-    margin-left: 13em;
     font-size: 1.5em;
     display: inline-block;
     margin-top: 2em;
@@ -170,14 +175,11 @@ strong {
     font-size: 1.5em;
 }
 
-.first-pic-from-left {
-    margin-left: 20em;
-}
-
 .protection {
     margin-top: 2em;
-    margin-left: 19em;
-    width: 70%;
+    margin-bottom: 5em;
+    /* margin-left: 19em; */
+    width: 90%;
     background-color: #c2f5ff;
     display: flex;
     align-items: center;
@@ -204,8 +206,8 @@ strong {
 
 #favourites {
     display: flex;
-    flex-flow: row wrap;
-    margin: 3em 0em 0em 20em;
+    flex-flow: row nowrap;
+    width: 100%;
 }
 
 #fav-left-side {
@@ -213,6 +215,12 @@ strong {
     flex-flow: column nowrap;
     margin-right: 1.5em;
 }
+
+/* #pretty-girl {
+    width: 100%;
+    height: auto;
+    flex: 1;
+} */
 
 #links {
     display: flex;
