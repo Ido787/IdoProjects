@@ -2,14 +2,23 @@ h1, h3, p, body {
     margin: 0;
 }
 
+@font-face {
+    font-family: ebayFont;
+    src: url(ebay-font.ttf);
+  }
+
 body {
-    font-family: "Market Sans", Arial, sans-serif;
+    font-family: ebayFont, Arial, sans-serif;
 }
 
 main {
     display: flex;
     flex-direction: column;
-    margin-left: 18em;
+    margin: 0 auto;
+}
+
+strong {
+    margin-right: 2em;
 }
 
 .vertical-line {
@@ -17,6 +26,15 @@ main {
 }
 
 .navbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+#nav-left-side {
+    display: flex;
+}
+
+#nav-right-side {
     display: flex;
 }
 
@@ -37,7 +55,7 @@ a:hover {
 }
 .navbar-item {
     display: block;
-    font-size: 1em;
+    font-size: 0.8em;
     padding: 0.5em;
 }
 
@@ -54,36 +72,39 @@ a:hover {
     box-shadow: 0 0.3vw 0.3vw 0 rgba(0,0,0,0.2);
     padding: 1vw 1.6vw;
     z-index: 1;
-    flex-direction: column !important;
+    flex-direction: column;
+}
+
+.dropdown-content > a {
+    font-size: 1em;
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
-.space {
-    flex-grow: 2;
-}
-
-#middle-space {
-    flex-grow: 4;
-}
-
 hr {
     border-width: 0.05em;
 }
 
-
 .search-bar {
     display: flex;
-    justify-content: center;
+    width: 100%;
+    position: relative;
+}
+
+#father-of-arrow {
+    display: flex;
+    align-items: center;
 }
 
 #search-box {
-    width: 40vw;
+    width: 100%;
+    font-family: FontAwesome;
 }
 
-#all-catagories ,#search-box {
+#all-catagories {
+    width: 25%;
     font-family: FontAwesome;
 }
 
@@ -114,6 +135,8 @@ hr {
 .sections-navbar {
     display: flex;
     justify-content: center;
+    width: 100%;
+    flex-flow: wrap;
 }
 
 .color-gray {
@@ -122,41 +145,41 @@ hr {
 
 #sliding-picture {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
     height: auto;
     max-width: 100%;
+    margin: 0 1em;
 }
 
 .titles {
     font-size: 1.5em;
     display: inline-block;
-    margin-top: 2em;
+    padding: 1em;
 }
-
-strong {
-    margin-right: 2em;
-}
-
 
 .line-of-pics {
     display: flex;
     flex-flow: row wrap;
+    justify-content: row wrap;
+    margin-bottom: 1em;
 }
 
 .pics-with-titles {
     display: flex;
     flex-flow: column nowrap;
-    margin-top: 2em;
-    margin-right: 2em;
+    align-items: center;
+    padding: 1em;
+    flex: 1;
+}
+
+.pics-with-titles a {
+    text-align: center;
 }
 
 .brand-pictures {
     display: block;
     width: 10em;
     height: 10em;
-    max-width: 100%;
-    
+    max-width: 100%;   
 }
 
 .suggestion-pictures {
@@ -164,7 +187,6 @@ strong {
     width: 13.5em;
     height: 13.5em;
     max-width: 100%;
-    
 }
 
 #cut-picture {
@@ -176,14 +198,15 @@ strong {
 }
 
 .protection {
-    margin-top: 2em;
-    margin-bottom: 5em;
-    /* margin-left: 19em; */
-    width: 90%;
     background-color: #c2f5ff;
     display: flex;
     align-items: center;
-    flex-flow: row nowrap;
+    margin-bottom: 3em;
+    border-radius: 1px;
+}
+
+#shield-pic {
+    padding: 1em;
 }
 
 #left-side {
@@ -206,7 +229,7 @@ strong {
 
 #favourites {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     width: 100%;
 }
 
@@ -214,27 +237,32 @@ strong {
     display: flex;
     flex-flow: column nowrap;
     margin-right: 1.5em;
+    flex: 1;
 }
 
-/* #pretty-girl {
-    width: 100%;
+#pretty-girl {
+    max-width: 100%;
     height: auto;
+    width: 100%;
     flex: 1;
-} */
+}
 
 #links {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    flex-flow: wrap;
+    width: 100%;
 }
 
 #links a {
-    font-size: 1.1em;
+    font-size: 0.9em;
+    color: gray;
 }
 
 .bunch-of-links {
     display: flex;
     flex-flow: column;
-    margin-right: 5em;
+    padding: 1em;
 }
 
 .same-col {
@@ -249,10 +277,35 @@ strong {
 footer {
     display: flex;
     justify-content: space-between;
-    margin: 5em 24em;
-    font-size: small;
+    margin: 5em 0;
+    font-size: smaller;
+    width: 100%;
 }
 
 #bottom-hr {
-    margin-top: 20em 0;
+    margin: 4em 0;
+}
+
+.bottom {
+    margin: 0 auto;
+    display: flex;
+    flex-flow: wrap;
+}
+
+.container {
+    padding: 1em;
+}
+
+.header {
+    margin: 0 auto;
+}
+
+#usa {
+    width: 100%;
+    font-family: FontAwesome;
+}
+
+main , .header , .bottom {
+    max-width: 1300px;
+    min-width: 700px;
 }

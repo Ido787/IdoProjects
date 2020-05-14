@@ -1,263 +1,282 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" type="text/css" href="Style.css">
     <script src="https://kit.fontawesome.com/40898733a8.js" crossorigin="anonymous"></script>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E(do)bay</title>
 </head>
+
 <body>
     <!--       _
        .__(.)< (QUACK)
         \___)   
  ~~~~~~~~~~~~~~~~~~-->
-    <nav>
-        <ul class="navbar">
-            <li class="space"></li>
-            <li class="navbar-item">Hi!
-                <a href="Main.html">Sign in</a>
-                or
-                <a href="Main.html">register</a>
-            </li>
-            <hr class="vertical-line"></hr>
-            <li class="navbar-item"><a href="Main.html">Daily Deals</a></li>
-            <hr class="vertical-line"></hr>
-            <li class="navbar-item"><a href="Main.html">Sell</a></li>
-            <hr class="vertical-line"></hr>
-            <li class="navbar-item"><a href="Main.html">Help & Contact</a></li>
-            <li id="middle-space"></li>
-            <li class="navbar-item"><a href="Main.html">Ship to</a></li>
-            <li class="navbar-item"><a href="Main.html">Watchlist<i class="fas fa-sort-down"></i></a></li>
-            <hr class="vertical-line"></hr>
-            <li class="navbar-item dropdown">
-                <a href="Main.html">My eBay</a>
-                <div class="dropdown-content">
-                    <a class="navbar-item" href="#">Summary</a>
-                    <a class="navbar-item" href="#">Recently Viewed</a>
-                    <a class="navbar-item" href="#">Bids/Offers</a>
-                    <a class="navbar-item" href="#">Watchlist</a>
-                    <a class="navbar-item" href="#">Purchase History</a>
-                    <a class="navbar-item" href="#">Selling</a>
-                    <a class="navbar-item" href="#">Saved Searches</a>
-                    <a class="navbar-item" href="#">Saved Sellers</a>
-                    <a class="navbar-item" href="#">Messages</a>
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="navbar">
+                    <div id="nav-left-side">
+                        <li class="navbar-item">Hi!
+                            <a href="Main.html">Sign in</a>
+                            or
+                            <a href="Main.html">register</a>
+                        </li>
+                        <hr class="vertical-line">
+                        </hr>
+                        <li class="navbar-item"><a href="Main.html">Daily Deals</a></li>
+                        <hr class="vertical-line">
+                        </hr>
+                        <li class="navbar-item"><a href="Main.html">Sell</a></li>
+                        <hr class="vertical-line">
+                        </hr>
+                        <li class="navbar-item"><a href="Main.html">Help & Contact</a></li>
+                    </div>
+                    <div id="nav-right-side">
+                        <li class="navbar-item"><a href="Main.html">Ship to</a></li>
+                        <li class="navbar-item"><a href="Main.html">Watchlist<i class="fas fa-sort-down"></i></a></li>
+                        <hr class="vertical-line">
+                        </hr>
+                        <li class="navbar-item dropdown">
+                            <a href="Main.html">My eBay</a>
+                            <div class="dropdown-content">
+                                <a class="navbar-item" href="#">Summary</a>
+                                <a class="navbar-item" href="#">Recently Viewed</a>
+                                <a class="navbar-item" href="#">Bids/Offers</a>
+                                <a class="navbar-item" href="#">Watchlist</a>
+                                <a class="navbar-item" href="#">Purchase History</a>
+                                <a class="navbar-item" href="#">Selling</a>
+                                <a class="navbar-item" href="#">Saved Searches</a>
+                                <a class="navbar-item" href="#">Saved Sellers</a>
+                                <a class="navbar-item" href="#">Messages</a>
+                            </div>
+                        </li>
+                        <li class="navbar-item"><a href="Main.html"><i class="fas fa-bell"></i></a></li>
+                        <li class="navbar-item"><a href="Main.html"><i class="fas fa-shopping-cart"></i></a></li>
+                    </div>
+                </ul>
+            </nav>
+            <hr>
+            <div class="search-bar">
+                <img src="Pictures/EbayLogo.png">
+                <a id="father-of-arrow" class="navbar-item" href="Main.html">Shop by catagory<i class="fas fa-sort-down"></i></a>
+                    <input type="text" id="search-box" placeholder="&#xF002; Search for anything" name="search-box">
+                    <input type="text" id="all-catagories" placeholder="All Catagories                       &#xf0dd;"
+                        name="Catagories" disabled>
+                    <input type="submit" id="search-button" value="Search" name="search-button">
+                <a id="advanced" href="Main.html">Advanced</a>
+            </div>
+            <hr>
+            <ul class="sections-navbar">
+                <li class="navbar-item"><a href="Main.html">Home</a></li>
+                <li class="navbar-item"><a href="Main.html"><i class="fas fa-heart"></i>Saved</a></li>
+                <li class="navbar-item"><a href="Main.html">Electronics</a></li>
+                <li class="navbar-item"><a href="Main.html">Fashion</a></li>
+                <li class="navbar-item"><a href="Main.html">Health & Beauty</a></li>
+                <li class="navbar-item"><a href="Main.html">Motors</a></li>
+                <li class="navbar-item"><a href="Main.html">Collectibles</a></li>
+                <li class="navbar-item"><a href="Main.html">Sports</a></li>
+                <li class="navbar-item"><a href="Main.html">Home & Garden</a></li>
+                <li class="navbar-item"><a href="Main.html">Deals</a></li>
+                <li class="navbar-item"><a href="Main.html">Under $10</a></li>
+            </ul>
+        </div>
+
+        <main>
+            <img id="sliding-picture" src="Pictures/SlidingPictures.png">
+            <a class="titles" href="#"><strong>Explore popular categories</strong>See all<i
+                    class="fas fa-arrow-right"></i></a>
+            <div class="line-of-pics">
+                <div class="pics-with-titles">
+                    <img class="brand-pictures" src="Pictures/Apple.webp">
+                    <a class="bigger-text" href="#">Apple</a>
                 </div>
-            </li>
-            <li class="navbar-item"><a href="Main.html"><i class="fas fa-bell"></i></a></li>
-            <li class="navbar-item"><a href="Main.html"><i class="fas fa-shopping-cart"></i></a></li>
-            <li class="space"></li>
-        </ul>
-    </nav>
-    <hr>
-    <div class="search-bar">
-        <img src="Pictures/EbayLogo.png">
-        <a class="navbar-item" href="Main.html">Shop by <br>catagory<i class="fas fa-sort-down"></i></a>
-        <form class="form">
-            <input type="text" id="search-box" placeholder="&#xF002; Search for anything" name="search-box">
-            <input type="text" id="all-catagories" placeholder="All Catagories                       &#xf0dd;" name="Catagories">
-            <input type="submit" id="search-button" value="Search" name="search-button">
-        </form>
-        <a id="advanced" href="Main.html">Advanced</a>
-    </div>
-    <hr>
-    <ul class="sections-navbar">
-        <li class="navbar-item"><a href="Main.html">Home</a></li>
-        <li class="navbar-item"><a href="Main.html"><i class="fas fa-heart"></i>Saved</a></li>
-        <li class="navbar-item"><a href="Main.html">Electronics</a></li>
-        <li class="navbar-item"><a href="Main.html">Fashion</a></li>
-        <li class="navbar-item"><a href="Main.html">Health & Beauty</a></li>
-        <li class="navbar-item"><a href="Main.html">Motors</a></li>
-        <li class="navbar-item"><a href="Main.html">Collectibles</a></li>
-        <li class="navbar-item"><a href="Main.html">Sports</a></li>
-        <li class="navbar-item"><a href="Main.html">Home & Garden</a></li>
-        <li class="navbar-item"><a href="Main.html">Deals</a></li>
-        <li class="navbar-item"><a href="Main.html">Under $10</a></li>
-    </ul>
-    <img id="sliding-picture" src="Pictures/SlidingPictures.png">
-    <main>
-        <a class="titles" href="#"><strong>Explore popular categories</strong>See all<i class="fas fa-arrow-right"></i></a>
-        <div class="line-of-pics">
-            <div class="pics-with-titles">
-                <img class="brand-pictures" src="Pictures/Apple.webp">
-                <a style="margin-left: 2em;" class="bigger-text" href="#">Apple</a>
+                <div class="pics-with-titles">
+                    <img class="brand-pictures" src="Pictures/Samsung.webp">
+                    <a class="bigger-text" href="#">Samsung</a>
+                </div>
+                <div class="pics-with-titles">
+                    <img class="brand-pictures" src="Pictures/Sony.webp">
+                    <a class="bigger-text" href="#">Sony</a>
+                </div>
+                <div class="pics-with-titles">
+                    <img class="brand-pictures" src="Pictures/Ugreen.webp">
+                    <a class="bigger-text" href="#">Ugreen</a>
+                </div>
+                <div class="pics-with-titles">
+                    <img class="brand-pictures" src="Pictures/Xiaomi.webp">
+                    <a class="bigger-text" href="#">Xiaomi</a>
+                </div>
+                <div class="pics-with-titles">
+                    <img class="brand-pictures" src="Pictures/Nike.webp">
+                    <a class="bigger-text" href="#">Nike</a>
+                </div>
+                <div class="pics-with-titles">
+                    <img class="brand-pictures" src="Pictures/Born Pretty.webp">
+                    <a class="bigger-text" href="#">Born Pretty</a>
+                </div>
             </div>
-            <div class="pics-with-titles">
-                <img class="brand-pictures" src="Pictures/Samsung.webp">
-                <a style="margin-left: 1.5em;"class="bigger-text" href="#">Samsung</a>
+            <a class="titles" href="#"><strong>Daily Deals</strong>See all<i class="fas fa-arrow-right"></i></a>
+            <div class="line-of-pics">
+                <div class="pics-with-titles">
+                    <img class="suggestion-pictures" src="Pictures/Bluedio.webp">
+                    <a class="bigger-text" href="#">ILS 112.37</a>
+                </div>
+                <div class="pics-with-titles">
+                    <img class="suggestion-pictures" src="Pictures/Android9.0.webp">
+                    <a class="bigger-text" href="#">ILS 242.09</a>
+                </div>
+                <div class="pics-with-titles">
+                    <img class="suggestion-pictures" src="Pictures/xp-pen.webp">
+                    <a class="bigger-text" href="#">ILS 1,749.66</a>
+                </div>
+                <div class="pics-with-titles">
+                    <img class="suggestion-pictures" src="Pictures/Rubberband.jpg">
+                    <a class="bigger-text" href="#">ILS 49.14</a>
+                </div>
+                <div class="pics-with-titles">
+                    <img class="suggestion-pictures" src="Pictures/Lempo.webp">
+                    <a class="bigger-text" href="#">ILS 56.17</a>
+                </div>
+                <div class="pics-with-titles">
+                    <img id="cut-picture" class="suggestion-pictures" src="Pictures/OrangeJuice.png">
+                    <a class="bigger-text" href="#">ILS 104.54</a>
+                </div>
             </div>
-            <div class="pics-with-titles">
-                <img class="brand-pictures" src="Pictures/Sony.webp">
-                <a style="margin-left: 2.5em;"class="bigger-text" href="#">Sony</a>
+            <a class="titles" href="#"><strong>Why eBay?</strong>See all<i class="fas fa-arrow-right"></i></a>
+            <div class="line-of-pics">
+                <div class="pics-with-titles">
+                    <img class="brand-pictures" src="Pictures/MoneyBack.webp">
+                    <a class="bigger-text" href="#">Money Back <br> Guarantee</a>
+                </div>
+                <div class="pics-with-titles">
+                    <img class="brand-pictures" src="Pictures/TopRatedSellers.webp">
+                    <a class="bigger-text" href="#">Top-Rated Sellers</a>
+                </div>
+                <div class="pics-with-titles">
+                    <img class="brand-pictures" src="Pictures/GetStartedWithEbay.webp">
+                    <a class="bigger-text" href="#">Get Started On eBay</a>
+                </div>
+                <div class="pics-with-titles">
+                    <img class="brand-pictures" src="Pictures/Discover.webp">
+                    <a class="bigger-text" href="#">Discover the eBay App</a>
+                </div>
+                <div class="pics-with-titles">
+                    <img class="brand-pictures" src="Pictures/Diamond.webp">
+                    <a class="bigger-text" href="#">80% of items are 100% New</a>
+                </div>
+                <div class="pics-with-titles">
+                    <img class="brand-pictures" src="Pictures/SuperDeals.webp">
+                    <a class="bigger-text" href="#">Super Deals</a>
+                </div>
+                <div class="pics-with-titles">
+                    <img class="brand-pictures" src="Pictures/CheckStatus.webp">
+                    <a class="bigger-text" href="#">Check Shipping Status</a>
+                </div>
             </div>
-            <div class="pics-with-titles">
-                <img class="brand-pictures" src="Pictures/Ugreen.webp">
-                <a style="margin-left: 1.8em;"class="bigger-text" href="#">Ugreen</a>
+            <div class="protection">
+                <img id="shield-pic" src="Pictures/shield.webp">
+                <div id="left-side">
+                    <h1>Your purchases are fully protected</h1>
+                    <h3>Get the item you ordered or get your money back</h3>
+                </div>
+                <button id="upper-learn-more" class="learn-more">Learn more <i class="fas fa-arrow-right"></i></button>
             </div>
-            <div class="pics-with-titles">
-                <img class="brand-pictures" src="Pictures/Xiaomi.webp">
-                <a style="margin-left: 1.8em;"class="bigger-text" href="#">Xiaomi</a>
+            <div id="favourites">
+                <div id="fav-left-side">
+                    <h1>Your Favourites In <br> One Place</h1>
+                    <h3>From brand new tech to retro furniture, <br> find your perfect here.</h3>
+                    <button class="learn-more">Learn more <i class="fas fa-arrow-right"></i></button>
+                </div>
+                <img id="pretty-girl" src="Pictures/PrettyGirl.webp">
             </div>
-            <div class="pics-with-titles">
-                <img class="brand-pictures" src="Pictures/Nike.webp">
-                <a style="margin-left: 1.8em;"class="bigger-text" href="#">Nike</a>
+        </main>
+
+        <hr id="bottom-hr">
+
+        <div class="bottom">
+            <div id="links">
+                <div class="bunch-of-links">
+                    <a href="#"><strong>Buy</strong></a>
+                    <a href="#">Registration</a>
+                    <a href="#">eBay Money Back Guarantee</a>
+                    <a href="#">Bidding & buying help</a>
+                    <a href="#">Stores</a>
+                    <a href="#">eBay Local</a>
+                    <a href="#">eBay guides</a>
+                </div>
+                <div class="same-col">
+                    <div class="bunch-of-links">
+                        <a href="#"><strong>Sell</strong></a>
+                        <a href="#">Start selling</a>
+                        <a href="#">Learn to sell</a>
+                        <a href="#">Business sellers</a>
+                        <a href="#">Affiliates</a>
+                    </div>
+                    <div class="bunch-of-links">
+                        <a href="#"><strong>Tools & apps</strong></a>
+                        <a href="#">Developers</a>
+                        <a href="#">Security center</a>
+                        <a href="#">eBay official time</a>
+                        <a href="#">Site map</a>
+                    </div>
+                </div>
+                <div class="same-col">
+                    <div class="bunch-of-links">
+                        <a href="#"><strong>eBay companies</strong></a>
+                        <a href="#">eBay Classifieds</a>
+                        <a href="#">Close5</a>
+                        <a href="#">See all companies</a>
+                    </div>
+                    <div class="bunch-of-links">
+                        <a href="#"><strong>Stay connected</strong></a>
+                        <a href="#">eBay's Blogs</a>
+                        <a href="#"><i class="fab fa-facebook-square"></i>Facebook</a>
+                        <a href="#"><i class="fab fa-twitter-square"></i>Twitter</a>
+                    </div>
+                </div>
+                <div class="bunch-of-links">
+                    <a href="#"><strong>About eBay</strong></a>
+                    <a href="#">Company info</a>
+                    <a href="#">News</a>
+                    <a href="#">Investors</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Government relations</a>
+                    <a href="#">Advertise with us</a>
+                    <a href="#">Policies</a>
+                    <a href="#">Verified Rights Owner (VeRO) Program</a>
+                </div>
+                <div class="same-col">
+                    <div class="bunch-of-links">
+                        <a href="#"><strong>Help & Contact</strong></a>
+                        <a href="#">Resolution Center</a>
+                        <a href="#">Seller Information Center</a>
+                        <a href="#">Contact us</a>
+                    </div>
+                    <div class="bunch-of-links">
+                        <a href="#"><strong>Community</strong></a>
+                        <a href="#">Announcements</a>
+                        <a href="#">Answer center</a>
+                        <a href="#">Discussion boards</a>
+                        <a href="#">eBay Giving Works</a>
+                        <a href="#">Groups</a>
+                        <a href="#">eBay top shared</a>
+                    </div>
+                    <div class="bunch-of-links">
+                        <a href="#"><strong>eBay Sites</strong></a>
+                        <input type="text" id="usa" disabled
+                            placeholder="&#xf74d;   USA                                  &#xf0dd;" name="Catagories">
+                    </div>
+                </div>
             </div>
-            <div class="pics-with-titles">
-                <img class="brand-pictures" src="Pictures/Born Pretty.webp">
-                <a style="margin-left: 1.8em;"class="bigger-text" href="#">Born Pretty</a>
-            </div>
-        </div>
-        <a class="titles" href="#"><strong>Daily Deals</strong>See all<i class="fas fa-arrow-right"></i></a>
-        <div class="line-of-pics">
-            <div class="pics-with-titles">
-                <img class="suggestion-pictures" src="Pictures/Bluedio.webp">
-                <a style="margin-left: 1em;" class="bigger-text" href="#">ILS 112.37</a>
-            </div>
-            <div class="pics-with-titles">
-                <img class="suggestion-pictures" src="Pictures/Android9.0.webp">
-                <a style="margin-left: 0.8em;"class="bigger-text" href="#">ILS 242.09</a>
-            </div>
-            <div class="pics-with-titles">
-                <img class="suggestion-pictures" src="Pictures/xp-pen.webp">
-                <a style="margin-left: 0.2em;"class="bigger-text" href="#">ILS 1,749.66</a>
-            </div>
-            <div class="pics-with-titles">
-                <img class="suggestion-pictures" src="Pictures/Rubberband.jpg">
-                <a style="margin-left: 1.2em;"class="bigger-text" href="#">ILS 49.14</a>
-            </div>
-            <div class="pics-with-titles">
-                <img class="suggestion-pictures" src="Pictures/Lempo.webp">
-                <a style="margin-left: 1.2em;"class="bigger-text" href="#">ILS 56.17</a>
-            </div>
-            <div class="pics-with-titles">
-                <img id="cut-picture" class="suggestion-pictures" src="Pictures/OrangeJuice.png">
-                <a style="margin-left: 1.2em;"class="bigger-text" href="#">ILS 104.54</a>
-            </div>
-        </div>
-        <a class="titles" href="#"><strong>Why eBay?</strong>See all<i class="fas fa-arrow-right"></i></a>
-        <div class="line-of-pics">
-            <div class="pics-with-titles">
-                <img class="brand-pictures" src="Pictures/MoneyBack.webp">
-                <a style="margin-left: 0.8em;" class="bigger-text" href="#">Money Back <br> Guarantee</a>
-            </div>
-            <div class="pics-with-titles">
-                <img class="brand-pictures" src="Pictures/TopRatedSellers.webp">
-                <a style="margin-left: 0;"class="bigger-text" href="#">Top-Rated Sellers</a>
-            </div>
-            <div class="pics-with-titles">
-                <img class="brand-pictures" src="Pictures/GetStartedWithEbay.webp">
-                <a style="margin-left: 1.2em;"class="bigger-text" href="#">Get Started <br> On eBay</a>
-            </div>
-            <div class="pics-with-titles">
-                <img class="brand-pictures" src="Pictures/Discover.webp">
-                <a style="margin-left: 0em;"class="bigger-text" href="#">Discover the eBay <br> App</a>
-            </div>
-            <div class="pics-with-titles">
-                <img class="brand-pictures" src="Pictures/Diamond.webp">
-                <a style="margin-left: 0.5em;"class="bigger-text" href="#">80% of items are <br> 100% New</a>
-            </div>
-            <div class="pics-with-titles">
-                <img class="brand-pictures" src="Pictures/SuperDeals.webp">
-                <a style="margin-left: 1.1em;"class="bigger-text" href="#">Super Deals</a>
-            </div>
-            <div class="pics-with-titles">
-                <img class="brand-pictures" src="Pictures/CheckStatus.webp">
-                <a style="margin-left: 1.1em;"class="bigger-text" href="#">Check Shipping <br> Status</a>
-            </div>
-        </div>
-        <div class="protection">
-            <img src="Pictures/shield.webp">
-            <div id="left-side">
-                <h1>Your purchases are fully protected</h1>
-                <h3>Get the item you ordered or get your money back</h3>
-            </div>
-            <button id="upper-learn-more" class="learn-more">Learn more <i class="fas fa-arrow-right"></i></button>
-        </div>
-        <div id="favourites">
-            <div id="fav-left-side">
-                <h1>Your Favourites In <br> One Place</h1>
-                <h3>From brand new tech to retro furniture, <br> find your perfect here.</h3>
-                <button class="learn-more">Learn more <i class="fas fa-arrow-right"></i></button>
-            </div>
-            <img id="pretty-girl" src="Pictures/PrettyGirl.webp">
-        </div>
-    </main>
-    <hr id="bottom-hr">
-    <div id="links">
-        <div class="bunch-of-links">
-            <a href="#"><strong>Buy</strong></a>
-            <a href="#">Registration</a>
-            <a href="#">eBay Money Back Guarantee</a>
-            <a href="#">Bidding & buying help</a>
-            <a href="#">Stores</a>
-            <a href="#">eBay Local</a>
-            <a href="#">eBay guides</a>
-        </div>
-        <div class="same-col">
-            <div class="bunch-of-links upper-col">
-                <a href="#"><strong>Sell</strong></a>
-                <a href="#">Start selling</a>
-                <a href="#">Learn to sell</a>
-                <a href="#">Business sellers</a>
-                <a href="#">Affiliates</a>
-            </div>
-            <div class="bunch-of-links">
-                <a href="#"><strong>Tools & apps</strong></a>
-                <a href="#">Developers</a>
-                <a href="#">Security center</a>
-                <a href="#">eBay official time</a>
-                <a href="#">Site map</a>
-            </div>
-        </div>
-        <div class="same-col">
-            <div class="bunch-of-links upper-col">
-                <a href="#"><strong>eBay companies</strong></a>
-                <a href="#">eBay Classifieds</a>
-                <a href="#">Close5</a>
-                <a href="#">See all companies</a>
-            </div>
-            <div class="bunch-of-links">
-                <a href="#"><strong>Stay connected</strong></a>
-                <a href="#">eBay's Blogs</a>
-                <a href="#"><i class="fab fa-facebook-square"></i>Facebook</a>
-                <a href="#"><i class="fab fa-twitter-square"></i>Twitter</a>
-            </div>
-        </div>
-        <div class="bunch-of-links">
-            <a href="#"><strong>About eBay</strong></a>
-            <a href="#">Company info</a>
-            <a href="#">News</a>
-            <a href="#">Investors</a>
-            <a href="#">Careers</a>
-            <a href="#">Government relations</a>
-            <a href="#">Advertise with us</a>
-            <a href="#">Policies</a>
-            <a href="#">Verified Rights Owner (VeRO) Program</a>
-        </div>
-        <div class="same-col">
-            <div class="bunch-of-links upper-col">
-                <a href="#"><strong>Help & Contact</strong></a>
-                <a href="#">Resolution Center</a>
-                <a href="#">Seller Information Center</a>
-                <a href="#">Contact us</a>
-            </div>
-            <div class="bunch-of-links upper-col">
-                <a href="#"><strong>Community</strong></a>
-                <a href="#">Announcements</a>
-                <a href="#">Answer center</a>
-                <a href="#">Discussion boards</a>
-                <a href="#">eBay Giving Works</a>
-                <a href="#">Groups</a>
-                <a href="#">eBay top shared</a>
-            </div>
-            <div class="bunch-of-links">
-                <a href="#"><strong>eBay Sites</strong></a>
-                <input type="text" id="all-catagories" placeholder="&#xf74d;   USA                                  &#xf0dd;" name="Catagories">
-            </div>
+            <footer>
+                Copyright © 1995-2020 eBay Inc. All Rights Reserved. User Agreement, Privacy, Cookies, Do not sell my
+                personal information and AdChoice
+                <img src="Pictures/norton.png">
+            </footer>
         </div>
     </div>
-    <footer>
-        Copyright © 1995-2020 eBay Inc. All Rights Reserved. User Agreement, Privacy, Cookies, Do not sell my personal information and AdChoice
-        <img src="Pictures/norton.png">
-    </footer>
+
 </body>
 </html>
