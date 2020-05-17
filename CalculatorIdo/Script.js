@@ -16,6 +16,8 @@ del = () => {
     }
 
     let currString = document.calcForm.input.value;
+
+    // Deleted the whole word if its NaN or Infinity
     if(/^[a-zA-Z]+$/.test(currString.charAt(currString.length - 1))) {
         document.calcForm.input.value = currString.substring(0, currString.length - 1);
         currString = document.calcForm.input.value;
@@ -29,7 +31,6 @@ del = () => {
     }
 }
 
-var isDotAvailable = true;
 
 insert = (input) => { 
     let currString = document.calcForm.input.value;
@@ -39,22 +40,7 @@ insert = (input) => {
         clearCalculator();
     }
 
-    if(!(!currString && /^[*/+.]+$/.test(input))) {        
-
-        // Make sure a number like 2.2.2 can't be put
-        if((/^[-*/+]+$/.test(input) && !isDotAvailable)) {
-            isDotAvailable = true;
-        }
-    
-        if(!(input === '.' && !isDotAvailable)) {
-            if(!((/^[-*/+.]+$/.test(input)) && /^[-*/+.]+$/.test(currString.charAt(currString.length - 1)))) {
-                if(input === '.' && isDotAvailable) {
-                    isDotAvailable = false;
-                }
-                document.calcForm.input.value = document.calcForm.input.value + input;
-            }
-        }
-    }
+    document.calcForm.input.value = document.calcForm.input.value + input;
 }
 
 equal = () => {
@@ -62,13 +48,17 @@ equal = () => {
         isResultShown = false;
         clearCalculator();
     }
-
-    let resultString = document.calcForm.input.value;
-    if(resultString) {
-        let calculatedResult = eval(resultString);
-        document.calcForm.input.value = calculatedResult;
-        currAns = calculatedResult;
-        isResultShown = true;
-        isDotAvailable = true;
+    try {
+        let resultString = document.calcForm.input.value;
+        if(resultString) {
+            let calculatedResult = eval(resultString);
+            document.calcForm.input.value = calculatedResult;
+            currAns = calculatedResult;
+            isResultShown = true;
+            isDotAvailable = true;
+        }
+    }
+    catch(err) {
+        alert(err.message);
     }
 }
