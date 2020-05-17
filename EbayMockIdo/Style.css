@@ -5,7 +5,7 @@ h1, h3, p, body {
 @font-face {
     font-family: ebayFont;
     src: url(ebay-font.ttf);
-  }
+}
 
 body {
     font-family: ebayFont, Arial, sans-serif;
@@ -13,7 +13,7 @@ body {
 
 main {
     display: flex;
-    flex-direction: column;
+    flex-flow: column;
     margin: 0 auto;
 }
 
@@ -32,6 +32,10 @@ strong {
 
 #nav-left-side {
     display: flex;
+}
+
+.blue {
+    color: blue;
 }
 
 #nav-right-side {
@@ -72,7 +76,7 @@ a:hover {
     box-shadow: 0 0.3vw 0.3vw 0 rgba(0,0,0,0.2);
     padding: 1vw 1.6vw;
     z-index: 1;
-    flex-direction: column;
+    flex-flow: column;
 }
 
 .dropdown-content > a {
@@ -159,7 +163,6 @@ hr {
 .line-of-pics {
     display: flex;
     flex-flow: row wrap;
-    justify-content: row wrap;
     margin-bottom: 1em;
 }
 
@@ -190,7 +193,7 @@ hr {
 }
 
 #cut-picture {
-    width: 8.5em !important;
+    width: 60%;
 }
 
 .bigger-text {
