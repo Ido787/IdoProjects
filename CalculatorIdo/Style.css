@@ -3,6 +3,7 @@ body {
     justify-content: center;
     margin-top: 5em;
     background-color: #3665f3;
+    min-width: 700px;
 }
 
 #calc-container {
