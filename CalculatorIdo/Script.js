@@ -1,14 +1,10 @@
-window.onload = () => {
-    clearCalculator();
-}
+window.onload = () => {clearCalculator();}
 
 var currAns = '';
 var isResultShown = false;
 var isbracketOpen = false;
 
-clearCalculator = () => {
-    document.calcForm.input.value = '';
-}
+clearCalculator = () => {document.calcForm.input.value = '';}
 
 del = () => {
     if(isResultShown) {
@@ -18,7 +14,7 @@ del = () => {
 
     let currString = document.calcForm.input.value;
 
-    // Deleted the whole word if its NaN or Infinity
+    // Deleted the whole word if its a word
     if(/^[a-zA-Z]+$/.test(currString.charAt(currString.length - 1))) {
         document.calcForm.input.value = currString.substring(0, currString.length - 1);
         currString = document.calcForm.input.value;
@@ -32,10 +28,7 @@ del = () => {
     }
 }
 
-
 insert = (input) => { 
-    let currString = document.calcForm.input.value;
-    
     if(isResultShown) {
         isResultShown = false;
         clearCalculator();
@@ -52,7 +45,7 @@ equal = () => {
 
     let resultString = document.calcForm.input.value;
     if(resultString) {
-        let calculatedResult = evaluate(resultString);
+        let calculatedResult = calculateResult(stringResultToArray(resultString));
         if(calculatedResult === undefined || isNaN(calculatedResult)) {
             alert('Syntax error');
         } else {
@@ -135,17 +128,15 @@ calculateResult = (resultArray) => {
     for (let i = 0; i < operators.length; i++) {
         for (let j = 0; j < resultArray.length; j++) {
 
-            // This will be true if there is a one of the ops
+            // This will be true if the current cell we're on is one
+            // of the operators in the current layer
             if (operators[i][resultArray[j]]) {
-
                 currentOp = operators[i][resultArray[j]];
             } else if (currentOp) {
-
                 currResult[currResult.length - 1] = 
                     currentOp(currResult[currResult.length - 1], resultArray[j]);
                 currentOp = null;
             } else {
-
                 currResult.push(resultArray[j]);
             }
         }
@@ -154,14 +145,5 @@ calculateResult = (resultArray) => {
         currResult = [];
     }
 
-    if (resultArray.length > 1) {
-        return undefined;
-    } else {
-        return resultArray[0];
-    }
-}
-
-evaluate = () => {
-    let resultString = document.calcForm.input.value;
-    return calculateResult(stringResultToArray(resultString));
+    return resultArray.length > 1 ? undefined : resultArray[0];
 }

@@ -1,7 +1,8 @@
 body {
     display: flex;
     justify-content: center;
-    margin-top: 5em;
+    height: 55em; /* Needed to use the align-items */
+    align-items: center;
     background-color: #3665f3;
     min-width: 700px;
 }
