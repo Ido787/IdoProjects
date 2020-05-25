@@ -1,50 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="Style.css">
-    <script src="Script.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>מ ח ש ב ו ן</title>
 </head>
 <body>
     <!--       _
-       .__(.)< (QUACK)
+        .__(.)< (QUACK)
         \___)   
- ~~~~~~~~~~~~~~~~~~-->
-    <div id="calc-container">
-        <form class="calc-form" name="calcForm">
-            <input id="result-line" type="text" name="input" disabled>
-            <br>
-            <input class="calc-button" type="button" value="7" onclick="insert(7)">
-            <input class="calc-button" type="button" value="8" onclick="insert(8)">
-            <input class="calc-button" type="button" value="9" onclick="insert(9)">
-            <input class="calc-button" type="button" value="DEL" onclick="del()">
-            <input class="calc-button" type="button" value="AC" onclick="clearCalculator()">
-            <br>
-            <input class="calc-button" type="button" value="4" onclick="insert(4)">
-            <input class="calc-button" type="button" value="5" onclick="insert(5)">
-            <input class="calc-button" type="button" value="6" onclick="insert(6)">
-            <input class="calc-button" type="button" value="*" onclick="insert('*')">
-            <input class="calc-button" type="button" value="/" onclick="insert('/')">
-            <br>
-            <input class="calc-button" type="button" value="1" onclick="insert(1)">
-            <input class="calc-button" type="button" value="2" onclick="insert(2)">
-            <input class="calc-button" type="button" value="3" onclick="insert(3)">
-            <input class="calc-button" type="button" value="+" onclick="insert('+')">
-            <input class="calc-button" type="button" value="-" onclick="insert('-')">
-            <br>
-            <input class="calc-button" type="button" value="0" onclick="insert(0)">
-            <input class="calc-button" type="button" value="." onclick="insert('.')">
-            <input class="calc-button" type="button" value="Ans" onclick="insert(currAns)">
-            <input class="calc-button" type="button" value="π" onclick="insert(3.1415)">
-            <input class="calc-button" type="button" value="=" onclick="equal()">
-            <br>
-            <input class="calc-button" type="button" value=" " disabled>
-            <input class="calc-button" type="button" value="(" onclick="insert('(')">
-            <input class="calc-button" type="button" value=" " disabled>
-            <input class="calc-button" type="button" value=")" onclick="insert(')')">
-            <input class="calc-button" type="button" value=" " disabled>
-        </form>
-    </div>
-</body>
-</html>
+        ~~~~~~~~~~~~~~~~~~-->
+        <div id="calc-container">
+            <form class="calc-form" name="calcForm">
+                <input id="result-line" type="text" name="input" disabled>
+                <!-- The buttons will be here -->
+            </form>
+        </div>
+            <script src="calcRunner.js" type="module"></script>
+            <!-- <script src="Regexes.js" type="module"></script> -->
+        </body>
+        </html>

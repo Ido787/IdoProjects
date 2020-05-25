@@ -1,7 +1,7 @@
 body {
     display: flex;
     justify-content: center;
-    height: 55em; /* Needed to use the align-items */
+    height: 40em; /* Needed to use the align-items */
     align-items: center;
     background-color: #3665f3;
     min-width: 700px;
