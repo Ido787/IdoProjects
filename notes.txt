@@ -1,0 +1,9 @@
+element = documnet.createElement("div");
+
+element.setAttribute
+
+onkeyup
+
+
+                <!-- <br>
+                    <input class="calc-button" type="button" value="7" onclick="insert(7)"

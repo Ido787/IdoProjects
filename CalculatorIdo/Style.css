@@ -1,0 +1,24 @@
+body {
+    display: flex;
+    justify-content: center;
+    height: 40em; /* Needed to use the align-items */
+    align-items: center;
+    background-color: #3665f3;
+    min-width: 700px;
+}
+
+#calc-container {
+    background-color: gray;
+}
+
+#result-line {
+    height: 4em;
+    width: 99.5%;
+    font-size: 2em;
+}
+
+.calc-button {
+    width: 4em;
+    height: 2em;
+    font-size: 2em;
+}
