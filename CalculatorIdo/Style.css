@@ -22,3 +22,7 @@ body {
     height: 2em;
     font-size: 2em;
 }
+
+button:focus {
+    outline:0;
+}

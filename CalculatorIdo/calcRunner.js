@@ -1,19 +1,24 @@
+import { canInsertOpenBracket, canInsertCloseBracket, canInsertNum, isOpsOrBrackets } from './regexes.js';
+import { isObjectEmpty, removeLastCharFromString } from './helpfulFunctions.js'
+
 window.onload = () => {
     buildCalc();
 }
 
 document.onkeyup = (event) => {
     let keyPressed = event.key;
+    keyPressed === 'Backspace' || keyPressed === 'Delete' ? keyPressed = 'DEL' : '';
+    keyPressed === 'Enter' ? keyPressed = '=' : '';
+    keyPressed === 'r' || keyPressed === 'R' ? keyPressed = 'AC' : '';
     placementArray.forEach((currElement) => {
-        keyPressed === 'Backspace' || keyPressed === 'Delete' ? keyPressed = 'DEL' : '';
-        keyPressed === 'Enter' ? keyPressed = '=' : '';
-        if(keyPressed == currElement.value) {
-            currElement.onClick(keyPressed);
+        if(!isObjectEmpty(currElement) && keyPressed === currElement.value.toString()) {
+            console.log(keyPressed);
+            currElement.onClick(currElement.value);
         }
     })
 }
 
-let buildCalc = () => {
+const buildCalc = () => {
     let calcForm = document.getElementsByClassName('calc-form')[0];
     let newButton;
     placementArray.forEach(currElement => {
@@ -30,54 +35,71 @@ let buildCalc = () => {
     });
 }
 
-let isResultShown = false;
-let isOpenBracketAvailable = true;
-let isCloseBracketAvailable = false;
-let isNumberAvailable = true;
-let isOperandAvailable = false;
-
-let clearCalculator = () => {
+const clearCalculator = () => {
     document.calcForm.input.value = '';
-    isResultShown = false;
 }
 
-let del = () => {
+const del = () => {
     let currString = document.calcForm.input.value;
     
-    // Deleted the whole word if its a word
-    if(/^[a-zA-Z]+$/.test(currString.charAt(currString.length - 1))) {
-        document.calcForm.input.value = currString.substring(0, currString.length - 1);
-        currString = document.calcForm.input.value;
+    // Deleted infinity if needed
+    let lastChar = currString.charAt(currString.length - 1);
+    currString = (lastChar === 'y') ? '' : removeLastCharFromString(currString);
 
-        while((/^[a-zA-Z]+$/.test(currString.charAt(currString.length - 1)))) {
-            document.calcForm.input.value = currString.substring(0, currString.length - 1);
-            currString = document.calcForm.input.value;
-        }
-    } else {
-        document.calcForm.input.value = currString.substring(0, currString.length - 1);
+    document.calcForm.input.value = currString;
+}
+
+const insertNumber = (input) => { 
+    let resultString = document.calcForm.input.value;
+    if(canInsertNum(resultString)) {
+        document.calcForm.input.value = document.calcForm.input.value + input;
     }
 }
 
-let insert = (input) => { 
+let currOpenBrackets = 0;
+
+const insertOpenBracket = (input) => {
+    let resultString = document.calcForm.input.value;
+    if(canInsertOpenBracket(resultString)) {
+        document.calcForm.input.value = document.calcForm.input.value + input;
+        currOpenBrackets++;
+    } 
+}
+
+const insertCloseBracket = (input) => {
+    let resultString = document.calcForm.input.value;
+    if(canInsertCloseBracket(resultString) ) {
+        if(currOpenBrackets !== 0) {
+            currOpenBrackets--;
+            document.calcForm.input.value = document.calcForm.input.value + input;
+        }
+    }
+}
+
+const insertDot = (input) => {
+    let resultString = document.calcForm.input.value;
     document.calcForm.input.value = document.calcForm.input.value + input;
 }
 
-let equal = () => {
+const insertOperator = (input) => {
+    let resultString = document.calcForm.input.value;
+    document.calcForm.input.value = document.calcForm.input.value + input;
+}
+
+const equal = () => {
     let resultString = document.calcForm.input.value;
     if(resultString) {
         let calculatedResult = calculateResult(stringResultToArray(resultString));
         calculatedResult = Math.round(calculatedResult * 100) / 100;
         if(calculatedResult === undefined || isNaN(calculatedResult)) {
             alert('Syntax error');
-            console.log('An error has occurred');
         } else {
             document.calcForm.input.value = calculatedResult;
-            isResultShown = true;
         }
     }
 }
 
-let stringResultToArray = (resultString) => {
+const stringResultToArray = (resultString) => {
     let resultArray = [];
     let currResult = '';
     let currChar = '';
@@ -85,32 +107,33 @@ let stringResultToArray = (resultString) => {
     for (let i = 0; i < resultString.length; i++) {
         currChar = resultString.charAt(i);
         
-        if (/^[)(*/+-]$/.test(currChar)) {
+        if (isOpsOrBrackets(currChar)) {
             if (currResult === '' && currChar === '-' &&
-            !(i > 0 && resultString.charAt(i-1) === ')')) {
+                !(i > 0 && resultString.charAt(i-1) === ')')) {
                 currResult = '-';
             } else {
                 if(currChar === '(' ||
-                   (/^[)*/+-]$/.test(currChar) && currResult === '')) {
+                   (isOpsOrBrackets(currChar) && currResult === '')) {
                        resultArray.push(currChar);
                     } else {
                         resultArray.push(parseFloat(currResult), currChar);
                     }
                     currResult = '';
                 }
-            } else {
-                currResult += currChar;
-            }
+        } else {
+            currResult += currChar;
         }
+    }
         
         if (currResult !== '') {
             resultArray.push(parseFloat(currResult));
         }
         
         return resultArray;
-    }
+}
     
-    let calculateResult = (resultArray) => {
+const calculateResult = (resultArray) => {
+        console.log(resultArray);
         const operators = [{'*': (a, b) => a * b,
                             '/': (a, b) => a / b},
                             {'+': (a, b) => a + b,
@@ -170,31 +193,27 @@ let stringResultToArray = (resultString) => {
 
 const placementArray = [
     {},
-    {value: 7, onClick: insert},
-    {value: 8, onClick: insert},
-    {value: 9, onClick: insert},
+    {value: 7, onClick: insertNumber},
+    {value: 8, onClick: insertNumber},
+    {value: 9, onClick: insertNumber},
     {value: 'DEL', onClick: del},
     {value: 'AC', onClick: clearCalculator},
     {},
-    {value: 4, onClick: insert},
-    {value: 5, onClick: insert},
-    {value: 6, onClick: insert},
-    {value: '*', onClick: insert},
-    {value: '/', onClick: insert},
+    {value: 4, onClick: insertNumber},
+    {value: 5, onClick: insertNumber},
+    {value: 6, onClick: insertNumber},
+    {value: '*', onClick: insertOperator},
+    {value: '/', onClick: insertOperator},
     {},
-    {value: 1, onClick: insert},
-    {value: 2, onClick: insert},
-    {value: 3, onClick: insert},
-    {value: '+', onClick: insert},
-    {value: '-', onClick: insert},
+    {value: 1, onClick: insertNumber},
+    {value: 2, onClick: insertNumber},
+    {value: 3, onClick: insertNumber},
+    {value: '+', onClick: insertOperator},
+    {value: '-', onClick: insertOperator},
     {},
-    {value: 0, onClick: insert},
-    {value: '.', onClick: insert},
-    {value: '(', onClick: insert},
-    {value: ')', onClick: insert},
+    {value: 0, onClick: insertNumber},
+    {value: '.', onClick: insertDot},
+    {value: '(', onClick: insertOpenBracket},
+    {value: ')', onClick: insertCloseBracket},
     {value: '=', onClick: equal},
 ];
-
-let isObjectEmpty = (obj) => {
-    return Object.keys(obj).length === 0;
-}
