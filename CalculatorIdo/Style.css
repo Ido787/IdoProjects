@@ -1,28 +1,40 @@
+@font-face {
+    font-family: digital-7;
+    src: url(digital-7.ttf);
+}
+
 body {
     display: flex;
     justify-content: center;
     height: 40em; /* Needed to use the align-items */
     align-items: center;
-    background-color: #3665f3;
+    background-color: whitesmoke;
     min-width: 700px;
 }
-
+    
 #calc-container {
-    background-color: gray;
+    background-color: #2a292e;
+    border: 2.5px solid black;
 }
 
 #result-line {
-    height: 4em;
-    width: 99.5%;
-    font-size: 2em;
+    height: 2.2em;
+    width: 100%;
+    font-size: 4em;
+    font-family: "digital-7";
+    background-color: #bbd0bf;
+    border: 0;
 }
 
 .calc-button {
+    border-radius: 3px;
     width: 4em;
     height: 2em;
     font-size: 2em;
-}
-
-button:focus {
-    outline:0;
+    margin: 0.08em;
+    background-color: #72777d;
+    color: white;
+    border: 0;
+    outline: none;
+    cursor: pointer;
 }

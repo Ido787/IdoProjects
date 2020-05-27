@@ -1,5 +1,8 @@
-import { canInsertOpenBracket, canInsertCloseBracket, canInsertNum, isOpsOrBrackets } from './regexes.js';
-import { isObjectEmpty, removeLastCharFromString } from './helpfulFunctions.js'
+import { operators, operatorsString } from './operators.js';
+import { canInsertOpenBracket, canInsertCloseBracket, canInsertNum, canInsertDot,
+         isOpsOrBrackets, canInsertOperator, canReplaceOperator, canPressEqual } from './regexes.js';
+import { isObjectEmpty, removeLastCharFromString, getLastCharFromString,
+         removeThreeLastCharFromString, getThirdToLastCharFromString } from './helpfulFunctions.js';
 
 window.onload = () => {
     buildCalc();
@@ -12,7 +15,6 @@ document.onkeyup = (event) => {
     keyPressed === 'r' || keyPressed === 'R' ? keyPressed = 'AC' : '';
     placementArray.forEach((currElement) => {
         if(!isObjectEmpty(currElement) && keyPressed === currElement.value.toString()) {
-            console.log(keyPressed);
             currElement.onClick(currElement.value);
         }
     })
@@ -29,7 +31,7 @@ const buildCalc = () => {
             newButton.setAttribute("class", "calc-button");
             newButton.setAttribute("type", "button");
             newButton.setAttribute("value", currElement.value);
-            newButton.addEventListener("click", () => currElement.onClick(currElement.value));
+            newButton.addEventListener("mousedown", () => currElement.onClick(currElement.value));
         }
         calcForm.appendChild(newButton);
     });
@@ -37,21 +39,28 @@ const buildCalc = () => {
 
 const clearCalculator = () => {
     document.calcForm.input.value = '';
+    currOpenBrackets = 0;
 }
 
 const del = () => {
     let currString = document.calcForm.input.value;
     
-    // Deleted infinity if needed
-    let lastChar = currString.charAt(currString.length - 1);
-    currString = (lastChar === 'y') ? '' : removeLastCharFromString(currString);
+    getLastCharFromString(currString) === '(' ? currOpenBrackets-- : '';
+    getLastCharFromString(currString) === ')' ? currOpenBrackets++ : '';
+
+    if(getThirdToLastCharFromString(currString) === 'e') {
+        currString = removeThreeLastCharFromString(currString);
+    } else {
+        // Deleted infinity if needed
+        currString = (getLastCharFromString(currString) === 'y') ? '' : removeLastCharFromString(currString);   
+    }
 
     document.calcForm.input.value = currString;
 }
 
-const insertNumber = (input) => { 
-    let resultString = document.calcForm.input.value;
-    if(canInsertNum(resultString)) {
+const insertNumber = (input) => {   
+    const resultString = document.calcForm.input.value;
+    if(resultString!== 'Infinity' && canInsertNum(resultString)) {
         document.calcForm.input.value = document.calcForm.input.value + input;
     }
 }
@@ -59,38 +68,47 @@ const insertNumber = (input) => {
 let currOpenBrackets = 0;
 
 const insertOpenBracket = (input) => {
-    let resultString = document.calcForm.input.value;
-    if(canInsertOpenBracket(resultString)) {
+    const resultString = document.calcForm.input.value;
+    if(resultString!== 'Infinity' && canInsertOpenBracket(resultString)) {
         document.calcForm.input.value = document.calcForm.input.value + input;
         currOpenBrackets++;
     } 
 }
 
 const insertCloseBracket = (input) => {
-    let resultString = document.calcForm.input.value;
-    if(canInsertCloseBracket(resultString) ) {
-        if(currOpenBrackets !== 0) {
+    const resultString = document.calcForm.input.value;
+    if((resultString!== 'Infinity') &&
+       (canInsertCloseBracket(resultString)) &&
+       (currOpenBrackets !== 0)) {
             currOpenBrackets--;
             document.calcForm.input.value = document.calcForm.input.value + input;
-        }
     }
 }
 
 const insertDot = (input) => {
-    let resultString = document.calcForm.input.value;
-    document.calcForm.input.value = document.calcForm.input.value + input;
+    const resultString = document.calcForm.input.value;
+    if(resultString!== 'Infinity' && canInsertDot(resultString)) {
+        document.calcForm.input.value = document.calcForm.input.value + input;
+    }
 }
 
 const insertOperator = (input) => {
     let resultString = document.calcForm.input.value;
-    document.calcForm.input.value = document.calcForm.input.value + input;
+
+    if(canInsertOperator(resultString)) {
+        document.calcForm.input.value = document.calcForm.input.value + input;
+        if(canReplaceOperator(resultString)) {
+            resultString = removeLastCharFromString(resultString);
+            document.calcForm.input.value = resultString + input;
+        }
+    }
 }
 
 const equal = () => {
     let resultString = document.calcForm.input.value;
-    if(resultString) {
+    if(resultString && canPressEqual(resultString) && currOpenBrackets === 0) {
         let calculatedResult = calculateResult(stringResultToArray(resultString));
-        calculatedResult = Math.round(calculatedResult * 100) / 100;
+        calculatedResult = Math.round(calculatedResult * 1000) / 1000;
         if(calculatedResult === undefined || isNaN(calculatedResult)) {
             alert('Syntax error');
         } else {
@@ -108,86 +126,81 @@ const stringResultToArray = (resultString) => {
         currChar = resultString.charAt(i);
         
         if (isOpsOrBrackets(currChar)) {
-            if (currResult === '' && currChar === '-' &&
-                !(i > 0 && resultString.charAt(i-1) === ')')) {
+            if (currChar === '-' && !(i > 0 && getLastCharFromString(resultString) === ')')) {
                 currResult = '-';
             } else {
-                if(currChar === '(' ||
-                   (isOpsOrBrackets(currChar) && currResult === '')) {
+                if(currChar === '(' || currResult === '') {
                        resultArray.push(currChar);
-                    } else {
-                        resultArray.push(parseFloat(currResult), currChar);
-                    }
-                    currResult = '';
+                } else {
+                    resultArray.push(parseFloat(currResult), currChar);
                 }
+                currResult = '';
+            }
         } else {
             currResult += currChar;
+            if(currChar === 'e') {
+                currResult += resultString.charAt(i + 1);
+                i++;
+            }
         }
     }
         
-        if (currResult !== '') {
-            resultArray.push(parseFloat(currResult));
-        }
-        
-        return resultArray;
+    if (currResult !== '') {
+        resultArray.push(parseFloat(currResult));
+    }
+    return resultArray;
 }
     
 const calculateResult = (resultArray) => {
-        console.log(resultArray);
-        const operators = [{'*': (a, b) => a * b,
-                            '/': (a, b) => a / b},
-                            {'+': (a, b) => a + b,
-                            '-': (a, b) => a - b} ];
-        let currResult = [];
-        let currentOp;
-        let indexOfClosingBracket;
-        let openingBracketCounter;
+    let indexOfClosingBracket;
+    let openingBracketCounter;
+    
+    // Calculating the equations in brackets first
+    for(let i = 0; i < resultArray.length - 1; i++) {
+        indexOfClosingBracket = -1;
         
-        // Calculating the equations in brackets first
-        for(let i = 0; i < resultArray.length - 1; i++) {
-            indexOfClosingBracket = -1;
+        if(resultArray[i] === '(') {
+            let j = i + 1;
+            openingBracketCounter = 1;
             
-            if(resultArray[i] === '(') {
-                let j = i + 1;
-                openingBracketCounter = 1;
-                
-                while(j!== resultArray.length) {
-                    if(resultArray[j] === ')') {
-                        openingBracketCounter--;
-                        indexOfClosingBracket = j;
-                        if(openingBracketCounter === 0) {
-                            resultArray.splice(i, indexOfClosingBracket - i + 1, calculateResult(resultArray.slice(i + 1, indexOfClosingBracket)));
-                            break;
-                        }
-                    } else if(resultArray[j] === '('){
-                        openingBracketCounter++;
+            while(j!== resultArray.length) {
+                if(resultArray[j] === ')') {
+                    openingBracketCounter--;
+                    indexOfClosingBracket = j;
+                    if(openingBracketCounter === 0) {
+                        let bracketsContents = resultArray.slice(i + 1, indexOfClosingBracket);
+                        resultArray.splice(i, indexOfClosingBracket - i + 1, calculateResult(bracketsContents));
+                        break;
                     }
+                } else if(resultArray[j] === '(') {
+                    openingBracketCounter++;
+                }
+                
                 j++;
             }
         }
     }
+        
+    let currResult = [];
+    let currentOp;
     
-    // Running on the layers of operators
-    for (let i = 0; i < operators.length; i++) {
-        for (let j = 0; j < resultArray.length; j++) {
-            
-            // This will be true if the current cell we're on is one
-            // of the operators in the current layer
-            if (operators[i][resultArray[j]]) {
-                currentOp = operators[i][resultArray[j]];
+    operators.forEach((operatorLayer) => {
+        resultArray.forEach((currElement) => {
+            if (operatorLayer[currElement]) {
+                currentOp = operatorLayer[currElement];
             } else if (currentOp) {
                 currResult[currResult.length - 1] = 
-                currentOp(currResult[currResult.length - 1], resultArray[j]);
+                    currentOp(currResult[currResult.length - 1], currElement);
                 currentOp = null;
             } else {
-                currResult.push(resultArray[j]);
+                currResult.push(currElement);
             }
-        }
-        
+        })
+
         resultArray = currResult;
         currResult = [];
-    }
-    
+    })
+
     return resultArray.length > 1 ? undefined : resultArray[0];
 }
 
