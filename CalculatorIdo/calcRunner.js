@@ -1,4 +1,4 @@
-import { operators, operatorsString } from './operators.js';
+import { operators } from './operators.js';
 import { canInsertOpenBracket, canInsertCloseBracket, canInsertNum, canInsertDot,
          isOpsOrBrackets, canInsertOperator, canReplaceOperator, canPressEqual } from './regexes.js';
 import { isObjectEmpty, removeLastCharFromString, getLastCharFromString,
@@ -6,18 +6,6 @@ import { isObjectEmpty, removeLastCharFromString, getLastCharFromString,
 
 window.onload = () => {
     buildCalc();
-}
-
-document.onkeyup = (event) => {
-    let keyPressed = event.key;
-    keyPressed === 'Backspace' || keyPressed === 'Delete' ? keyPressed = 'DEL' : '';
-    keyPressed === 'Enter' ? keyPressed = '=' : '';
-    keyPressed === 'r' || keyPressed === 'R' ? keyPressed = 'AC' : '';
-    placementArray.forEach((currElement) => {
-        if(!isObjectEmpty(currElement) && keyPressed === currElement.value.toString()) {
-            currElement.onClick(currElement.value);
-        }
-    })
 }
 
 const buildCalc = () => {
@@ -35,6 +23,18 @@ const buildCalc = () => {
         }
         calcForm.appendChild(newButton);
     });
+}
+
+document.onkeyup = (event) => {
+    let keyPressed = event.key;
+    keyPressed === 'Backspace' || keyPressed === 'Delete' ? keyPressed = 'DEL' : '';
+    keyPressed === 'Enter' ? keyPressed = '=' : '';
+    keyPressed === 'r' || keyPressed === 'R' ? keyPressed = 'AC' : '';
+    placementArray.forEach((currElement) => {
+        if(!isObjectEmpty(currElement) && keyPressed === currElement.value.toString()) {
+            currElement.onClick(currElement.value);
+        }
+    })
 }
 
 const clearCalculator = () => {
