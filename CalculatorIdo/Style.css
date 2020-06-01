@@ -3,10 +3,10 @@
     src: url(digital-7.ttf);
 }
 
-body {
+html, body {
     display: flex;
     justify-content: center;
-    height: 40em; /* Needed to use the align-items */
+    height: 100%;
     align-items: center;
     background-color: whitesmoke;
     min-width: 700px;
@@ -19,7 +19,7 @@ body {
 
 #result-line {
     height: 2.2em;
-    width: 100%;
+    width: 99%;
     font-size: 4em;
     font-family: "digital-7";
     background-color: #bbd0bf;

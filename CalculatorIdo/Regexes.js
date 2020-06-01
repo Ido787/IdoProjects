@@ -19,7 +19,7 @@ export const canInsertCloseBracket = (st) => {
 }
 
 export const canInsertOperator = (st) => {
-     return /.+(?<!\()$/.test(st);
+     return /.+(?<!\(|\.)$/.test(st);
 }
 
 export const canReplaceOperator = (st) => {
