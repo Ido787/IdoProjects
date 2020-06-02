@@ -1,0 +1,15 @@
+html, body {
+    background-color: whitesmoke;
+}
+
+#title {
+    margin: 5px 0;
+}
+
+#login-container {
+    background-color: gray;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+}

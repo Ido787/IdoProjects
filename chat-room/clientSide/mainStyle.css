@@ -1,0 +1,32 @@
+html, body {
+    background-color: whitesmoke;
+}
+
+#title {
+    margin: 5px 0;
+}
+
+#chat-container {
+    background-color: gray;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+#msgs {
+    align-self: flex-end;
+    margin: 0 90px;
+}
+
+#input-container {
+    width: 85%;
+}
+
+#chat-form {
+}
+
+#input-line {
+    width:100%;
+    direction: rtl;
+}
