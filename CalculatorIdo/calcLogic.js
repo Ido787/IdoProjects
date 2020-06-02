@@ -2,17 +2,21 @@ import { operators } from './operators.js';
 import { isOpsOrBrackets } from './regexes.js';
 import { getLastCharFromString } from './helpfulFunctions.js';
 
-export const stringResultToArray = (resultString) => {
+export const getResult = (result) => {
+    return calculateResult(parseResult(result));
+}
+
+const parseResult = (stringResult) => {
     let resultArray = [];
     let currResult = '';
     let currChar = '';
     
-    for (let i = 0; i < resultString.length; i++) {
-        currChar = resultString.charAt(i);
+    for (let i = 0; i < stringResult.length; i++) {
+        currChar = stringResult.charAt(i);
         
         if (isOpsOrBrackets(currChar)) {
             if (currResult === '' && currChar === '-' && 
-                !(i > 0 && getLastCharFromString(resultString) === ')')) {
+                !(i > 0 && getLastCharFromString(stringResult) === ')')) {
                 currResult = '-';
             } else {
                 if(currChar === '(' || currResult === '') {
@@ -25,7 +29,7 @@ export const stringResultToArray = (resultString) => {
         } else {
             currResult += currChar;
             if(currChar === 'e') {
-                currResult += resultString.charAt(i + 1);
+                currResult += stringResult.charAt(i + 1);
                 i++;
             }
         }
@@ -38,7 +42,7 @@ export const stringResultToArray = (resultString) => {
     return resultArray;
 }
     
-export const calculateResult = (resultArray) => {
+const calculateResult = (resultArray) => {
     let indexOfClosingBracket;
     let openingBracketCounter;
     
@@ -46,23 +50,21 @@ export const calculateResult = (resultArray) => {
         indexOfClosingBracket = -1;
         
         if(currElement === '(') {
-            let j = i + 1;
             openingBracketCounter = 1;
-            
-            while(j!== resultArray.length) {
+            let j = i + 1;
+            let isFound = false;
+            for(let j = i + 1; (j < resultArray.length) && (!isFound); j++) {
                 if(resultArray[j] === ')') {
                     openingBracketCounter--;
                     indexOfClosingBracket = j;
                     if(openingBracketCounter === 0) {
                         let bracketsContents = resultArray.slice(i + 1, indexOfClosingBracket);
                         resultArray.splice(i, indexOfClosingBracket - i + 1, calculateResult(bracketsContents));
-                        break;
+                        isFound = true;
                     }
                 } else if(resultArray[j] === '(') {
                     openingBracketCounter++;
                 }
-                
-                j++;
             }
         }
     });

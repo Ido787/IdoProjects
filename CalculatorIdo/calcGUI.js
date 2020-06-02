@@ -1,8 +1,8 @@
 import { canInsertOpenBracket, canInsertCloseBracket, canInsertNum, canInsertDot,
-         canInsertOperator, canReplaceOperator, canPressEqual } from './regexes.js';
+         canInsertOperator, canReplaceOperator, canPressEqual, canInsertZero } from './regexes.js';
 import { isObjectEmpty, removeLastCharFromString, getLastCharFromString,
          removeThreeLastCharFromString, getThirdToLastCharFromString } from './helpfulFunctions.js';
-import { stringResultToArray, calculateResult } from './calcLogic.js';
+import { getResult } from './calcLogic.js';
 
 window.onload = () => {
     buildCalc();
@@ -23,97 +23,6 @@ const buildCalc = () => {
             calcForm.appendChild(newButton);
         });
     });
-}
-
-document.onkeyup = (event) => {
-    let keyPressed = event.key;
-    const CURRENT_VALUE = DICTIONARY[keyPressed];
-    if(CURRENT_VALUE) {
-        CURRENT_VALUE.onClick(CURRENT_VALUE.value);
-    }
-    // enter doesn't work
-}
-
-const clearCalculator = () => {
-    document.calcForm.input.value = '';
-    currOpenBrackets = 0;
-}
-
-const del = () => {
-    let currString = document.calcForm.input.value;
-    let lastChar = getLastCharFromString(currString);
-
-    lastChar === '(' ? currOpenBrackets-- : '';
-    lastChar === ')' ? currOpenBrackets++ : '';
-
-    if(getThirdToLastCharFromString(currString) === 'e') {
-        currString = removeThreeLastCharFromString(currString);
-    } else {
-        currString = (getLastCharFromString(currString) === 'y') ? '' : removeLastCharFromString(currString);   
-    }
-
-    document.calcForm.input.value = currString;
-}
-
-const insertNumber = (input) => {   
-    const resultString = document.calcForm.input.value;
-    if(resultString!== 'Infinity' && canInsertNum(resultString)) {
-        document.calcForm.input.value = document.calcForm.input.value + input;
-    }
-}
-
-let currOpenBrackets = 0;
-
-const insertOpenBracket = (input) => {
-    const resultString = document.calcForm.input.value;
-    if(resultString!== 'Infinity' && canInsertOpenBracket(resultString)) {
-        document.calcForm.input.value = document.calcForm.input.value + input;
-        currOpenBrackets++;
-    } 
-}
-
-const insertCloseBracket = (input) => {
-    const resultString = document.calcForm.input.value;
-    if((resultString!== 'Infinity') &&
-       (canInsertCloseBracket(resultString)) &&
-       (currOpenBrackets !== 0)) {
-            currOpenBrackets--;
-            document.calcForm.input.value = document.calcForm.input.value + input;
-    }
-}
-
-const insertDot = (input) => {
-    const resultString = document.calcForm.input.value;
-    if(resultString!== 'Infinity' && canInsertDot(resultString)) {
-        document.calcForm.input.value = document.calcForm.input.value + input;
-    }
-}
-
-const insertOperator = (input) => {
-    let resultString = document.calcForm.input.value;
-
-    if(canInsertOperator(resultString)) {
-        document.calcForm.input.value = document.calcForm.input.value + input;
-        if(canReplaceOperator(resultString)) {
-            resultString = removeLastCharFromString(resultString);
-            document.calcForm.input.value = resultString + input;
-        }
-    }
-}
-
-const equal = () => {
-    let resultString = document.calcForm.input.value;
-    if(resultString && canPressEqual(resultString) && currOpenBrackets === 0) {
-        let calculatedResult = calculateResult(stringResultToArray(resultString));
-        calculatedResult = Number(calculatedResult.toFixed(5));
-        if(calculatedResult === undefined || isNaN(calculatedResult)) {
-            alert('Syntax error');
-        } else {
-            document.calcForm.input.value = calculatedResult;
-        }
-    } else {
-        alert('Syntax error');
-    }
 }
 
 const PLACEMENT_ARRAY = [
@@ -139,10 +48,104 @@ const PLACEMENT_ARRAY = [
     {value: '.', onClick: insertDot, keys: ['.']},
     {value: '(', onClick: insertOpenBracket, keys: ['(']},
     {value: ')', onClick: insertCloseBracket, keys: [')']},
-    {value: '=', onClick: equal, keys: ['=']}]
+    {value: '=', onClick: equal, keys: ['Enter']}]
 ];
 
-const makeDictionary = () => {
+document.onkeyup = (event) => {
+    const keyPressed = event.key;
+    const CURRENT_VALUE = DICTIONARY[keyPressed];
+    if(CURRENT_VALUE) {
+        CURRENT_VALUE.onClick(CURRENT_VALUE.value);
+    }
+}
+
+const INPUT_LINE = document.calcForm.input;
+
+function clearCalculator() {
+    INPUT_LINE.value = '';
+    currOpenBrackets = 0;
+}
+
+function del() {
+    let currResult = INPUT_LINE.value;
+    let lastChar = getLastCharFromString(currResult);
+
+    lastChar === '(' ? currOpenBrackets-- : '';
+    lastChar === ')' ? currOpenBrackets++ : '';
+
+    if(getThirdToLastCharFromString(currResult) === 'e') {
+        currResult = removeThreeLastCharFromString(currResult);
+    } else {
+        currResult = (getLastCharFromString(currResult) === 'y') ? '' : removeLastCharFromString(currResult);   
+    }
+
+    INPUT_LINE.value = currResult;
+}
+
+function insertNumber(input) {   
+    const currResult = INPUT_LINE.value;
+    if(currResult!== 'Infinity' && canInsertNum(currResult)) {
+        if((input === 0 && canInsertZero(currResult)) || (input !== 0)) {
+            INPUT_LINE.value = INPUT_LINE.value + input;
+        }
+    }
+}
+
+let currOpenBrackets = 0;
+
+function insertOpenBracket(input) {
+    const currResult = INPUT_LINE.value;
+    if(currResult!== 'Infinity' && canInsertOpenBracket(currResult)) {
+        INPUT_LINE.value = INPUT_LINE.value + input;
+        currOpenBrackets++;
+    } 
+}
+
+function insertCloseBracket(input) {
+    const currResult = INPUT_LINE.value;
+    if((currResult!== 'Infinity') &&
+       (canInsertCloseBracket(currResult)) &&
+       (currOpenBrackets !== 0)) {
+            currOpenBrackets--;
+            INPUT_LINE.value = INPUT_LINE.value + input;
+    }
+}
+
+function insertDot(input) {
+    const currResult = INPUT_LINE.value;
+    if(currResult!== 'Infinity' && canInsertDot(currResult)) {
+        INPUT_LINE.value = INPUT_LINE.value + input;
+    }
+}
+
+function insertOperator(input) {
+    let currResult = INPUT_LINE.value;
+
+    if(canInsertOperator(currResult)) {
+        INPUT_LINE.value = INPUT_LINE.value + input;
+        if(canReplaceOperator(currResult)) {
+            currResult = removeLastCharFromString(currResult);
+            INPUT_LINE.value = currResult + input;
+        }
+    }
+}
+
+function equal() {
+    let result = INPUT_LINE.value;
+    if(result && canPressEqual(result) && currOpenBrackets === 0) {
+        let calculatedResult = getResult(result);
+        calculatedResult = Number(calculatedResult.toFixed(5));
+        if(calculatedResult === undefined || isNaN(calculatedResult)) {
+            alert('Syntax error');
+        } else {
+            INPUT_LINE.value = calculatedResult;
+        }
+    } else {
+        alert('Syntax error');
+    }
+}
+
+function makeDictionary() {
     let dictionary = {};
     PLACEMENT_ARRAY.forEach((currLayer) => {
         currLayer.forEach((currElement) => {
@@ -150,8 +153,6 @@ const makeDictionary = () => {
                 dictionary[currElement.keys[i]] = currElement;
             }
         });
-        //dictionary[key] = value which is the whole element;
-        //dictionary[key].onClick(dictionary[key].value)
     });
 
     return dictionary;

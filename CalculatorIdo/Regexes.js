@@ -6,11 +6,13 @@ export const isOpsOrBrackets = (char) => {
 };
 
 export const canInsertNum = (st) => {
-     return /.*(?<!\))$/.test(st);
+     const reg = new RegExp(`.*(?<!\\))$`)
+     return reg.test(st);
 }
 
 export const canInsertOpenBracket = (st) => {
-     return /.*(?<!\d|\)|\.)$/.test(st);
+     const reg = new RegExp(`.*(?<!\\d|\\)|\\.)$`);
+     return reg.test(st);
 }
 
 export const canInsertCloseBracket = (st) => {
@@ -19,7 +21,8 @@ export const canInsertCloseBracket = (st) => {
 }
 
 export const canInsertOperator = (st) => {
-     return /.+(?<!\(|\.)$/.test(st);
+     const reg = new RegExp(`.+(?<!\\(|\\.)$`);
+     return reg.test(st);
 }
 
 export const canReplaceOperator = (st) => {
@@ -35,4 +38,9 @@ export let canInsertDot = (st) => {
 export let canPressEqual = (st) => {
      const reg = new RegExp(`.*(?<![${operatorsString}]|\\.|\\()$`);
      return reg.test(st);
+}
+
+export let canInsertZero = (st) => {
+     const reg = new RegExp(`^([0]+)$`);
+     return !reg.test(st);
 }
