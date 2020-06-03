@@ -1,5 +1,9 @@
 html, body {
     background-color: whitesmoke;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 100%;
 }
 
 #title {
@@ -7,9 +11,24 @@ html, body {
 }
 
 #login-container {
-    background-color: gray;
+    background-color: lightslategray;
     display: flex;
+    width: 50%;
     flex-flow: column nowrap;
     align-items: center;
     justify-content: center;
+}
+
+#login-form {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+#input-line {
+    direction: rtl;
+}
+
+#login-button {
+    width: 40%;
 }

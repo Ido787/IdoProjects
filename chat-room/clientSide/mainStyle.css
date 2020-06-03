@@ -1,30 +1,56 @@
 html, body {
     background-color: whitesmoke;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+}
+
+.msg {
+    text-align: right;
+}
+
+#chat-container {
+    background-color: slategrey;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    height: 100%;
+    justify-content: space-between;
+}
+
+#title-div {
+    display: flex;
+    width: 85%;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    position: fixed;
+
 }
 
 #title {
     margin: 5px 0;
 }
 
-#chat-container {
-    background-color: gray;
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: center;
+#sign-out-button {
 }
 
 #msgs {
     align-self: flex-end;
-    margin: 0 90px;
+    margin: 50px 90px 0 90px;
 }
 
 #input-container {
+    display: flex;
+    align-items: flex-end;
     width: 85%;
+    position: fixed;
+    bottom: 15px;
 }
 
 #chat-form {
-}
+    width: 100%;
+}   
 
 #input-line {
     width:100%;
