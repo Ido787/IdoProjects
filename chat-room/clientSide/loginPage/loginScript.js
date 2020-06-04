@@ -5,7 +5,6 @@ document.getElementById("login-button").addEventListener("click", login);
 
 function login(event) {
     event.preventDefault();       
-    console.log(INPUT_LINE.value);
     sessionStorage.setItem('name', INPUT_LINE.value);
-    window.location.replace('./main.html');
+    window.location.replace("../mainPage/main.html");
 }

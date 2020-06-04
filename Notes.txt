@@ -1,0 +1,2 @@
+// I'm using Short Polling
+// Dis of sockets: They do not have an http session involved, which may result in a problem
