@@ -8,12 +8,14 @@ APP.use(CORS());
 APP.use(BODY_PARSER.json());
 
 APP.get('/msgs', (req, res) => res.send(MSGS));
+
 APP.post('/send', (req, res) => {
-    console.log(`Added ${req.body.name.split("").reverse().join("")}'s message`);
+    console.log(`Added ${req.body.name.split("").reverse().join("")}'s message: ${req.body.content}`);
     MSGS.push(req.body);
+    return res;
 });
 
-APP.listen(PORT, () => console.log(`Chat is LIVE at http://localhost:${PORT}`))
+APP.listen(PORT, () => console.log(`Chat is LIVE at http://localhost:${PORT}`));
 
 const MSGS = [
-];
+];  

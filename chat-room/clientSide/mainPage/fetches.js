@@ -7,7 +7,7 @@ export async function getMessages() {
 }
 
 export async function uploadMessage(name, content) {
-    fetch(SEND_MESSAGES_API_LINK, {
+    await fetch(SEND_MESSAGES_API_LINK, {
         method: 'Post',
         headers: {
           'Content-Type': 'application/json',
@@ -15,6 +15,6 @@ export async function uploadMessage(name, content) {
         body: JSON.stringify({
           "name": name,
           "content": content
-        })
+        })  
     })
 }

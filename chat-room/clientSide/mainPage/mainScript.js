@@ -5,7 +5,7 @@ let currMessagesNum = 0;
 const MSG_ELEMENT = document.getElementById("msgs");
 const USERNAME = sessionStorage.getItem('name') ? sessionStorage.getItem('name') : 'חומוס';
 
-const INTERVAL = setInterval(updateMsgs, 100);
+const INTERVAL = setInterval(updateMsgs, 500);
 async function updateMsgs() {
   msgs = await getMessages();
   if(msgs.length > currMessagesNum) {
@@ -40,7 +40,7 @@ function buildMsgs() {
     newMsg.appendChild(bdiText);
     newMsg.setAttribute("class", 'msg');
     msgElement.appendChild(newMsg);
-  }
+  } 
 }
 
 document.getElementById("sign-out-button").addEventListener("click", () => {
