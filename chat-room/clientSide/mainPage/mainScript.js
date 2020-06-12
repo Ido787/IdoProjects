@@ -1,31 +1,32 @@
-import { getMessages, uploadMessage } from './fetches.js';
+const socket = io("http://localhost:3000");
 
 let msgs;
 let currMessagesNum = 0;
 const MSG_ELEMENT = document.getElementById("msgs");
 const USERNAME = sessionStorage.getItem('name') ? sessionStorage.getItem('name') : 'חומוס';
 
-const INTERVAL = setInterval(updateMsgs, 500);
-async function updateMsgs() {
-  msgs = await getMessages();
-  if(msgs.length > currMessagesNum) {
-    buildMsgs();
-    currMessagesNum = msgs.length;
-    MSG_ELEMENT.scrollTop = MSG_ELEMENT.scrollHeight - MSG_ELEMENT.clientHeight;
-  }
-}
+socket.on("getMsgs", MSGS => {
+  msgs = MSGS;
+  buildMsgs();
+  currMessagesNum = msgs.length;
+  MSG_ELEMENT.scrollTop = MSG_ELEMENT.scrollHeight - MSG_ELEMENT.clientHeight;
+});
 
-window.onload = async () => {
+window.onload = () => {
   console.log(`ברוך הבא ${USERNAME}`);
+  socket.emit("userConnected", USERNAME);
 }
 
 const INPUT_LINE = document.getElementById("input-line");
 
 document.getElementById("chat-form").addEventListener("submit", sendMessage);
-async function sendMessage(event) {
+function sendMessage(event) {
   event.preventDefault();
   if(INPUT_LINE.value) {
-    await uploadMessage(USERNAME, INPUT_LINE.value);
+    socket.emit("addMsg", {
+      name: USERNAME,
+      content: INPUT_LINE.value
+    });
     INPUT_LINE.value ='';
   }
 }

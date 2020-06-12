@@ -1,21 +1,31 @@
 const EXPRESS = require('express');
 const BODY_PARSER = require('body-parser');
-const APP = EXPRESS();
 const CORS = require('cors');
 const PORT = 3000;
+const APP = EXPRESS();
 
 APP.use(CORS());
 APP.use(BODY_PARSER.json());
 
-APP.get('/msgs', (req, res) => res.send(MSGS));
+// Express server
+const server = APP.listen(PORT, () => console.log(`Chat is LIVE at http://localhost:${PORT}`));
 
-APP.post('/send', (req, res) => {
-    console.log(`Added ${req.body.name.split("").reverse().join("")}'s message: ${req.body.content}`);
-    MSGS.push(req.body);
-    return res;
-});
+// Socket
+let io = require('socket.io')(server);
 
-APP.listen(PORT, () => console.log(`Chat is LIVE at http://localhost:${PORT}`));
+io.on("connection", socket => {
+    socket.on("userConnected", username => {
+        console.log(`${username} connected`);
+    })
+    
+    socket.emit("getMsgs", MSGS);
+
+    socket.on("addMsg", msg => {
+        console.log(`Added ${msg.name}'s message: ${msg.content}`);
+        MSGS.push(msg);
+        io.emit("getMsgs", MSGS);
+    })
+})
 
 const MSGS = [
-];  
+]; 
