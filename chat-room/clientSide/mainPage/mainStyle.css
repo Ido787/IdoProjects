@@ -3,11 +3,11 @@ html, body {
     height: 100%;
     margin: 0;
     overflow: hidden;
-    min-width: 500px;
+    min-width: 300px;
 }
 
 #chat-container {
-    background-color: #B1B3B3FF;
+    background-color: whitesmoke;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     display: flex;
     flex-flow: column nowrap;
@@ -24,7 +24,7 @@ html, body {
     justify-content: space-between;
     position: fixed;
     top: 0px;
-    background-color: #E3CD81FF;
+    background-color: #075E54;
 }
 
 #title {
@@ -37,15 +37,18 @@ html, body {
 }
 
 #msgs {
-    align-self: flex-end;   
-    max-height: 90%;
+    align-self: flex-end;
+    max-height: 80vh;
     overflow-y: scroll;
     overflow-x: hidden;
+    margin-bottom: 40px;
 }
 
 .msg {
     text-align: right;
-    font-size: 16px;
+    font-size: 24px;
+    border-radius: 5px 0 0 5px;
+    margin-right: 10px;
 }
 
 #input-container {
@@ -56,8 +59,8 @@ html, body {
     width: 100%;
     position: fixed;
     bottom: 0px;
-    padding: 15px;
-    background-color: #E3CD81FF;
+    padding: 10px;
+    background-color: #075E54;
 }
 
 #chat-form {

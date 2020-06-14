@@ -7,25 +7,27 @@ const APP = EXPRESS();
 APP.use(CORS());
 APP.use(BODY_PARSER.json());
 
-// Express server
-const server = APP.listen(PORT, () => console.log(`Chat is LIVE at http://localhost:${PORT}`));
+const SERVER = APP.listen(PORT, () => console.log(`Chat is LIVE at http://localhost:${PORT}`));
 
-// Socket
-let io = require('socket.io')(server);
+const IO = require('socket.io')(SERVER);
 
-io.on("connection", socket => {
+IO.on("connection", socket => {
     socket.on("userConnected", username => {
-        console.log(`${username} connected`);
+        console.log(`${reverseIfHebrew(username)} connected`);
     })
     
     socket.emit("getMsgs", MSGS);
 
     socket.on("addMsg", msg => {
-        console.log(`Added ${msg.name}'s message: ${msg.content}`);
+        console.log(`Added ${reverseIfHebrew(msg.name)}'s message: ${reverseIfHebrew(msg.content)}`);
         MSGS.push(msg);
-        io.emit("getMsgs", MSGS);
+        IO.emit("getMsgs", MSGS);
     })
 })
 
 const MSGS = [
-]; 
+];
+
+function reverseIfHebrew(st) {
+    return /[\u0590-\u05fe]/.test(st) ? st.split("").reverse().join("") : st;
+}

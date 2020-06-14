@@ -1,6 +1,6 @@
 html, body {
     margin: 0;
-    background-color: #E3CD81FF;
+    background-color: #075E54;
     display: flex;
     justify-content: center;
     height: 100%;
@@ -9,9 +9,9 @@ html, body {
 
 #login-container {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    background-color: #B1B3B3FF;
+    background-color: whitesmoke;
     display: flex;
-    width: 50%;
+    width: 65%;
     flex-flow: column nowrap;
     align-items: center;
     justify-content: center;
