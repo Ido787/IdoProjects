@@ -11,12 +11,9 @@ const SERVER = APP.listen(PORT, () => console.log(`Chat is LIVE at http://localh
 
 const IO = require('socket.io')(SERVER);
 
-let usersOnline = 0;
-
 IO.on("connection", socket => {
     socket.on("userConnected", username => {
-        usersOnline++;
-        console.log(`${reverseIfHebrew(username)} connected, ${usersOnline} users online`);
+        console.log(`${reverseIfHebrew(username)} connected`);
     })
     
     socket.emit("getMsgs", MSGS);
@@ -26,13 +23,7 @@ IO.on("connection", socket => {
         MSGS.push(msg);
         IO.emit("getMsgs", MSGS);
     })
-
-    socket.on("disconnect", socket => {
-        usersOnline--;
-        console.log(`Someone signed out, ${usersOnline} users online`);
-    })
 })
-
 
 const MSGS = [
 ];
