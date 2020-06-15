@@ -29,6 +29,7 @@ html, body {
 
 #title {
     margin: 5px 0;
+    font-size: 2.5em;
 }
 
 #sign-out-button {
