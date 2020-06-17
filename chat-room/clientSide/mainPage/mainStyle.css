@@ -37,7 +37,7 @@ html, body {
     margin-left: 20px;
 }
 
-#msgs {
+#messages {
     align-self: flex-end;
     max-height: 80vh;
     overflow-y: scroll;
@@ -46,7 +46,7 @@ html, body {
     word-wrap: break-word;
 }
 
-.msg {
+.message {
     text-align: right;
     font-size: 24px;
     border-radius: 5px 0 0 5px;
@@ -76,6 +76,6 @@ html, body {
     direction: rtl;
 }
 
-#msg-button {
+#message-button {
     width: 10%;
 }

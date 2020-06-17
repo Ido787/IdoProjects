@@ -1,27 +1,40 @@
-const SOCKET = io("http://localhost:3000");
+import { 
+  SERVER_IP, 
+  USER_CONNECTED_EVENT, 
+  GET_LAST_MESSAGE_EVENT, 
+  ADD_MESSAGE_EVENT,
+  GET_MESSAGES_EVENT,
+  SESSION_STORAGE_NAME } from '../clientConsts.js';
 
-let currMessagesNum = 0;
-const MSG_ELEMENT = document.getElementById("msgs");
-const USERNAME = sessionStorage.getItem('name') ? sessionStorage.getItem('name') : 'חומוס';
+const SOCKET = io(SERVER_IP);
 
-window.onload = () => {
-  console.log(`ברוך הבא ${USERNAME}`);
-  SOCKET.emit("userConnected", USERNAME);
+const USERNAME = sessionStorage.getItem(SESSION_STORAGE_NAME).trim() ? sessionStorage.getItem(SESSION_STORAGE_NAME) : 'חומוס';
+const MESSAGES_ELEMENT = document.getElementById("messages");
+const INPUT_LINE = document.getElementById("input-line");
+
+function scrollToBottom () {
+  INPUT_LINE.scrollTop = INPUT_LINE.scrollHeight - INPUT_LINE.clientHeight;
 }
 
-SOCKET.on("getMsgs", msgs => {
-  buildMsgs(msgs);
-  currMessagesNum = msgs.length;
-  MSG_ELEMENT.scrollTop = MSG_ELEMENT.scrollHeight - MSG_ELEMENT.clientHeight;
-});
+function addMeesageToChat(message) {
+  const NEW_MESSAGE = document.createElement("p");
+  const BDI_TEXT = document.createElement("bdi");
+  BDI_TEXT.innerHTML = `${message.name} : ${message.content}`;
+  NEW_MESSAGE.appendChild(BDI_TEXT);
+  NEW_MESSAGE.classList.add("message");
+  MESSAGES_ELEMENT.appendChild(NEW_MESSAGE);
+}
 
-const INPUT_LINE = document.getElementById("input-line");
+SOCKET.on(GET_LAST_MESSAGE_EVENT, message => {
+  addMeesageToChat(message);
+  scrollToBottom();
+});
 
 document.getElementById("chat-form").addEventListener("submit", sendMessage);
 function sendMessage(event) {
   event.preventDefault();
-  if(INPUT_LINE.value) {
-    SOCKET.emit("addMsg", {
+  if(INPUT_LINE.value.trim()) {
+    SOCKET.emit(ADD_MESSAGE_EVENT, {
       name: USERNAME,
       content: INPUT_LINE.value
     });
@@ -29,18 +42,15 @@ function sendMessage(event) {
   }
 }
 
-function buildMsgs(msgs) {
-  for(let i = currMessagesNum; i < msgs.length; i++) {
-    const MSG = msgs[i];
-    const NEW_MSG = document.createElement("p");
-    const BDI_TEXT = document.createElement("bdi");
-    BDI_TEXT.innerHTML = `${MSG.name} : ${MSG.content}`;
-    NEW_MSG.appendChild(BDI_TEXT);
-    NEW_MSG.setAttribute("class", 'msg');
-    MSG_ELEMENT.appendChild(NEW_MSG);
-  } 
-}
-
 document.getElementById("sign-out-button").addEventListener("click", () => {
-  window.location.replace("../loginPage/login.html");
+  window.location.href = "../loginPage/login.html";
 });
+
+console.log(`ברוך הבא ${USERNAME}`);
+SOCKET.emit(USER_CONNECTED_EVENT, USERNAME);
+SOCKET.on(GET_MESSAGES_EVENT, messages => {
+  messages.forEach((message) => {
+    addMeesageToChat(message);
+  })
+  scrollToBottom();
+})
