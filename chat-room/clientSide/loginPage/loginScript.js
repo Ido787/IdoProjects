@@ -9,9 +9,10 @@ const SOCKET = io(SERVER_IP);
 document.getElementById("login-form").addEventListener("submit", login);
 document.getElementById("login-button").addEventListener("click", login);
 
+let username;
+
 function login(event) {
     event.preventDefault();
-    let username;
 
     if(INPUT_LINE.value.trim()) {
         username = INPUT_LINE.value;
@@ -21,19 +22,15 @@ function login(event) {
         localStorage.setItem(LOCAL_STORAGE_ID, parseInt(currLocalStorageId) + 1);
     }
     
-    let isNameExist = false;
-    SOCKET.emit("getNames");
-    SOCKET.on("getNames", names => {
-        names.forEach((name) => {
-            name === username ? isNameExist = true : '';
-            console.log(name);
-        })
-        if(isNameExist) {
-            alert("Plase pick an original name");
-        } else {
-            SOCKET.emit("addName", username);
-            sessionStorage.setItem(SESSION_STORAGE_NAME , username);
-            window.location.href = "../mainPage/main.html";
-        }
-    })
+    SOCKET.emit("isNameExist", username);
 }
+
+SOCKET.on("isNameExist", isNameExist => {
+    if(isNameExist) {
+        alert("Plase pick an original name");
+    } else {
+        SOCKET.emit("addName", username);
+        sessionStorage.setItem(SESSION_STORAGE_NAME , username);
+        window.location.href = "../mainPage/main.html";
+    }
+}) 

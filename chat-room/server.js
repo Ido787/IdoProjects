@@ -34,8 +34,9 @@ IO.on("connection", socket => {
         MESSAGES.push(message);
         IO.emit(GET_LAST_MESSAGE_EVENT, MESSAGES[MESSAGES.length - 1]);
     })
-    socket.on("getNames", () => {
-        socket.emit("getNames", NAMES);
+    
+    socket.on("isNameExist", name => {
+        socket.emit("isNameExist", NAMES.includes(name));
     })
 
     socket.on("addName", name => {
