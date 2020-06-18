@@ -4,7 +4,9 @@ const {
      USER_CONNECTED_EVENT,
      GET_LAST_MESSAGE_EVENT,
      ADD_MESSAGE_EVENT,
-     GET_MESSAGES_EVENT
+     GET_MESSAGES_EVENT,
+     IS_NAME_EXISTS_EVENT,
+     ADD_NAME_EVENT
     } = require('./serverConsts.js');
 const EXPRESS = require('express');
 const APP = EXPRESS();
@@ -35,11 +37,11 @@ IO.on("connection", socket => {
         IO.emit(GET_LAST_MESSAGE_EVENT, MESSAGES[MESSAGES.length - 1]);
     })
     
-    socket.on("isNameExist", name => {
-        socket.emit("isNameExist", NAMES.includes(name));
+    socket.on(IS_NAME_EXISTS_EVENT, name => {
+        socket.emit(IS_NAME_EXISTS_EVENT, NAMES.includes(name));
     })
 
-    socket.on("addName", name => {
+    socket.on(ADD_NAME_EVENT, name => {
         NAMES.push(name);
     })
 })

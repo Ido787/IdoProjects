@@ -8,7 +8,7 @@ import {
 
 const SOCKET = io(SERVER_IP);
 
-const USERNAME = sessionStorage.getItem(SESSION_STORAGE_NAME).trim() ? sessionStorage.getItem(SESSION_STORAGE_NAME) : 'חומוס';
+const USERNAME = sessionStorage.getItem(SESSION_STORAGE_NAME);
 const MESSAGES_ELEMENT = document.getElementById("messages");
 const INPUT_LINE = document.getElementById("input-line");
 

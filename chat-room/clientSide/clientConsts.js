@@ -6,3 +6,5 @@ export const ADD_MESSAGE_EVENT = "addMessage";
 export const GET_MESSAGES_EVENT = "getMessages";
 export const SESSION_STORAGE_NAME = "name";
 export const LOCAL_STORAGE_ID = "id";
+export const IS_NAME_EXISTS_EVENT = "isNameExist";
+export const ADD_NAME_EVENT = "addName";
