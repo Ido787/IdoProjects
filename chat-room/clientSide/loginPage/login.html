@@ -14,9 +14,16 @@
         <h3 id="title">תתחבר אח</h3>
         <div id="input-container">
             <form id="login-form" name="login-form" autocomplete="off">
-                <input id="input-line" type="text" name="input" maxlength="20">
-                <button id="login-button">התחבר</button>
+                <label for="name-input">:שמך</label>
+                <input id="name-input" type="text" name="name-input" maxlength="20">
+                <label for="room-input">:בחר חדר</label>
+                <select id="room-input" type="radio" name="room-input">
+                </select>
             </form>
+            <div id="buttons">
+                <button id="login-create-button">התחבר וצור חדר חדש</button>
+                <button id="login-button">התחבר</button>
+            </div>
         </div>
     </div>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>

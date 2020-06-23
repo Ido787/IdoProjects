@@ -4,16 +4,18 @@ import {
   GET_LAST_MESSAGE_EVENT, 
   ADD_MESSAGE_EVENT,
   GET_MESSAGES_EVENT,
-  SESSION_STORAGE_NAME } from '../clientConsts.js';
+  SESSION_STORAGE_NAME
+ } from '../clientConsts.js';
 
 const SOCKET = io(SERVER_IP);
-
 const USERNAME = sessionStorage.getItem(SESSION_STORAGE_NAME);
+const ROOM_NAME = sessionStorage.getItem('room');
 const MESSAGES_ELEMENT = document.getElementById("messages");
 const INPUT_LINE = document.getElementById("input-line");
+const TITLE_DIV = document.getElementById("title-div");
 
 function scrollToBottom () {
-  INPUT_LINE.scrollTop = INPUT_LINE.scrollHeight - INPUT_LINE.clientHeight;
+  MESSAGES_ELEMENT.scrollTop = MESSAGES_ELEMENT.scrollHeight - MESSAGES_ELEMENT.clientHeight;
 }
 
 function addMeesageToChat(message) {
@@ -46,11 +48,15 @@ document.getElementById("sign-out-button").addEventListener("click", () => {
   window.location.href = "../loginPage/login.html";
 });
 
-console.log(`ברוך הבא ${USERNAME}`);
-SOCKET.emit(USER_CONNECTED_EVENT, USERNAME);
+SOCKET.emit(USER_CONNECTED_EVENT, USERNAME, ROOM_NAME);
 SOCKET.on(GET_MESSAGES_EVENT, messages => {
   messages.forEach((message) => {
     addMeesageToChat(message);
   })
   scrollToBottom();
 })
+
+const ROOM_NAME_ELEMENT = document.createElement("h2");
+ROOM_NAME_ELEMENT.setAttribute('id', 'room-name');
+ROOM_NAME_ELEMENT.innerText = ROOM_NAME;
+TITLE_DIV.appendChild(ROOM_NAME_ELEMENT);

@@ -27,12 +27,19 @@ html, body {
     align-items: center;
 }
 
-#input-line {
+#name-input, #room-input {
     height: 50px;
     font-size: 30px;
     direction: rtl;
 }
 
-#login-button {
-    width: 40%;
+#buttons {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+#buttons > * {
+    width: 50%;
+    height: 10vh;
+    margin-top: 10px;
 }

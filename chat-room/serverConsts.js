@@ -6,4 +6,6 @@ exports.GET_LAST_MESSAGE_EVENT = "getLastMessage";
 exports.ADD_MESSAGE_EVENT = "addMessage";
 exports.GET_MESSAGES_EVENT = "getMessages";
 exports.IS_NAME_EXISTS_EVENT = "isNameExist";
-exports.ADD_NAME_EVENT   = "addName";
+exports.ADD_NAME_EVENT = "addName";
+exports.GET_ROOM_NAMES = "getRoomNames";
+exports.ADD_ROOM_TO_LIST = "addRoomToList";

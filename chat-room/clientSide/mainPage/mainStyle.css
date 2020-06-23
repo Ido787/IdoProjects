@@ -79,3 +79,7 @@ html, body {
 #message-button {
     width: 10%;
 }
+
+#room-name {
+    margin-right: 10px;
+}
