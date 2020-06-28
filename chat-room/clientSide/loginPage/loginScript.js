@@ -6,8 +6,10 @@ import {
     ADD_NAME_EVENT,
     SESSION_STORAGE_ROOM,
     GET_ROOM_NAMES,
-    ADD_ROOM_TO_LIST } from '../clientConsts.js';
-
+    ADD_ROOM_TO_LIST,
+    RESET_DEFAULT_NAME_EVENT } from '../clientConsts.js';
+    
+const AVAILABLE_NAME = sessionStorage.getItem(SESSION_STORAGE_NAME);
 const NAME_INPUT = document.getElementById("name-input");
 const ROOM_INPUT = document.getElementById("room-input");
 const SOCKET = io(SERVER_IP);
@@ -20,17 +22,17 @@ document.getElementById("login-form").addEventListener("submit", event => login(
 
 let username;
 
-function markNewRoom(event) {
-    event.preventDefault();
-    isNewRoom = true;
-    login(event);
-}
-
 function addOptionToRoomlist(roomName) {
     const NEW_OPTION = document.createElement("option");
     NEW_OPTION.innerText = roomName;
     NEW_OPTION.setAttribute('value', roomName);
     ROOM_INPUT.appendChild(NEW_OPTION);
+}
+
+function markNewRoom(event) {
+    event.preventDefault();
+    isNewRoom = true;
+    login(event);
 }
 
 function login(event) {
@@ -55,7 +57,7 @@ function login(event) {
 
 SOCKET.on(IS_NAME_EXISTS_EVENT, isNameExist => {
     if(isNameExist) {
-        alert("Please pick an original name");
+        alert("שם זה תפוס. בחר/י בבקשה שם אחר");
     } else {
         SOCKET.emit(ADD_NAME_EVENT, username);
         sessionStorage.setItem(SESSION_STORAGE_NAME , username);
@@ -64,8 +66,8 @@ SOCKET.on(IS_NAME_EXISTS_EVENT, isNameExist => {
 })
 
 SOCKET.on(ADD_ROOM_TO_LIST, roomName => {
-    newRoomName = `${newRoomName.substring(0, 5)}${parseInt(newRoomName.substring(5, newRoomName.length)) + 1}`; 
     addOptionToRoomlist(roomName);
+    newRoomName = `${newRoomName.substring(0, 5)}${parseInt(newRoomName.substring(5, newRoomName.length)) + 1}`;
 });
 
 SOCKET.on(GET_ROOM_NAMES, roomNames => {
@@ -73,7 +75,10 @@ SOCKET.on(GET_ROOM_NAMES, roomNames => {
     newRoomName = `Room ${roomNames.length}`;
 });
 
-let availableName = sessionStorage.getItem(SESSION_STORAGE_NAME);
-if(availableName) {
-    NAME_INPUT.value = availableName;
+if(AVAILABLE_NAME) {
+    NAME_INPUT.value = AVAILABLE_NAME;
 }
+
+SOCKET.on(RESET_DEFAULT_NAME_EVENT, () => {
+    localStorage.setItem(LOCAL_STORAGE_ID, 1);
+})

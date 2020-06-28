@@ -11,3 +11,4 @@ export const IS_NAME_EXISTS_EVENT = "isNameExist";
 export const ADD_NAME_EVENT = "addName";
 export const GET_ROOM_NAMES = "getRoomNames";
 export const ADD_ROOM_TO_LIST = "addRoomToList";
+export const RESET_DEFAULT_NAME_EVENT = "resetDefaultName";

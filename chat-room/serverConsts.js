@@ -9,3 +9,4 @@ exports.IS_NAME_EXISTS_EVENT = "isNameExist";
 exports.ADD_NAME_EVENT = "addName";
 exports.GET_ROOM_NAMES = "getRoomNames";
 exports.ADD_ROOM_TO_LIST = "addRoomToList";
+exports.RESET_DEFAULT_NAME_EVENT = "resetDefaultName";

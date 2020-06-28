@@ -4,15 +4,20 @@ import {
   GET_LAST_MESSAGE_EVENT, 
   ADD_MESSAGE_EVENT,
   GET_MESSAGES_EVENT,
-  SESSION_STORAGE_NAME
- } from '../clientConsts.js';
+  SESSION_STORAGE_NAME,
+  SESSION_STORAGE_ROOM } from '../clientConsts.js';
 
 const SOCKET = io(SERVER_IP);
 const USERNAME = sessionStorage.getItem(SESSION_STORAGE_NAME);
-const ROOM_NAME = sessionStorage.getItem('room');
+const ROOM_NAME = sessionStorage.getItem(SESSION_STORAGE_ROOM);
 const MESSAGES_ELEMENT = document.getElementById("messages");
 const INPUT_LINE = document.getElementById("input-line");
 const TITLE_DIV = document.getElementById("title-div");
+
+if(USERNAME === null || ROOM_NAME === null) {
+  alert("Error! Redirecting you to the login page");
+  window.location.href = "../loginPage/login.html";
+}
 
 function scrollToBottom () {
   MESSAGES_ELEMENT.scrollTop = MESSAGES_ELEMENT.scrollHeight - MESSAGES_ELEMENT.clientHeight;

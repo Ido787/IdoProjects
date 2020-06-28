@@ -8,7 +8,8 @@ const {
      IS_NAME_EXISTS_EVENT,
      ADD_NAME_EVENT,
      GET_ROOM_NAMES,
-     ADD_ROOM_TO_LIST} = require('./serverConsts.js');
+     ADD_ROOM_TO_LIST,
+     RESET_DEFAULT_NAME_EVENT } = require('./serverConsts.js');
 const EXPRESS = require('express');
 const APP = EXPRESS();
 
@@ -23,21 +24,28 @@ const ROOMS = {
     'Default room': []
 };
 
+let isDefaultNameReset = false;
+
 IO.on("connection", socket => {
     let currRoom;
     let currUsername;
+
+    if(!isDefaultNameReset) {
+        socket.emit(RESET_DEFAULT_NAME_EVENT);
+        isDefaultNameReset = true;
+    }
+
     socket.on(USER_CONNECTED_EVENT, (username, room) => {
         console.log(`${reverseIfHebrew(username)} connected`);
-        currUsername = username;
-        currRoom = room;
-        if(!ROOMS.hasOwnProperty(currRoom)) {
-            ROOMS[currRoom] = [];
+        if(!ROOMS.hasOwnProperty(room)) {
+            ROOMS[room] = [];
             const ROOM_NAMES = Object.keys(ROOMS);
             IO.emit(ADD_ROOM_TO_LIST, ROOM_NAMES[ROOM_NAMES.length - 1]);
         }
-        
-        socket.join(currRoom);
-        socket.emit(GET_MESSAGES_EVENT, ROOMS[currRoom]);
+        socket.join(room);
+        socket.emit(GET_MESSAGES_EVENT, ROOMS[room]);
+        currUsername = username;
+        currRoom = room;
     })
 
     socket.on(GET_LAST_MESSAGE_EVENT, () => {
@@ -46,8 +54,8 @@ IO.on("connection", socket => {
     })
 
     socket.on(ADD_MESSAGE_EVENT, message => {
-        let currMsgs = ROOMS[currRoom];
         console.log(`Added ${reverseIfHebrew(message.name)}'s message: ${reverseIfHebrew(message.content)}`);
+        let currMsgs = ROOMS[currRoom];
         currMsgs.push(message);
         IO.to(currRoom).emit(GET_LAST_MESSAGE_EVENT, currMsgs[currMsgs.length - 1]);
     })
