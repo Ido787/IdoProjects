@@ -7,7 +7,7 @@ html, body {
     width: 100%;
 }
 
-#login-container {
+.login-container {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background-color: whitesmoke;
     display: flex;
@@ -17,28 +17,28 @@ html, body {
     justify-content: center;
 }
 
-#title {
+.title {
     margin: 5px 0;
 }
 
-#login-form {
+.login-form {
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
 }
 
-#name-input, #room-input {
+.name-input, .room-input {
     height: 50px;
     font-size: 30px;
     direction: rtl;
 }
 
-#buttons {
+.buttons {
     display: flex;
     flex-flow: row nowrap;
 }
 
-#buttons > * {
+.buttons > * {
     width: 50%;
     height: 10vh;
     margin-top: 10px;

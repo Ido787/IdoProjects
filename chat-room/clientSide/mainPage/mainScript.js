@@ -6,62 +6,53 @@ import {
   GET_MESSAGES_EVENT,
   SESSION_STORAGE_NAME,
   SESSION_STORAGE_ROOM } from '../clientConsts.js';
+import {
+  addMeesageToChat,
+  addRoomNameToChat,
+  scrollToBottom } from '../domManipulationFuncs.js';
 
-const SOCKET = io(SERVER_IP);
 const USERNAME = sessionStorage.getItem(SESSION_STORAGE_NAME);
 const ROOM_NAME = sessionStorage.getItem(SESSION_STORAGE_ROOM);
-const MESSAGES_ELEMENT = document.getElementById("messages");
-const INPUT_LINE = document.getElementById("input-line");
-const TITLE_DIV = document.getElementById("title-div");
+const ERROR_MESSAGE = "שגיאה, תנסה להתחבר קודם";
+let messagesElement = document.querySelector(".messages");
+let inputLineElement = document.querySelector(".input-line");
+let titleDivElement = document.querySelector(".title-div");
 
 if(USERNAME === null || ROOM_NAME === null) {
-  alert("Error! Redirecting you to the login page");
+  alert(ERROR_MESSAGE);
   window.location.href = "../loginPage/login.html";
 }
 
-function scrollToBottom () {
-  MESSAGES_ELEMENT.scrollTop = MESSAGES_ELEMENT.scrollHeight - MESSAGES_ELEMENT.clientHeight;
-}
+let socket = io(SERVER_IP);
 
-function addMeesageToChat(message) {
-  const NEW_MESSAGE = document.createElement("p");
-  const BDI_TEXT = document.createElement("bdi");
-  BDI_TEXT.innerHTML = `${message.name} : ${message.content}`;
-  NEW_MESSAGE.appendChild(BDI_TEXT);
-  NEW_MESSAGE.classList.add("message");
-  MESSAGES_ELEMENT.appendChild(NEW_MESSAGE);
-}
-
-SOCKET.on(GET_LAST_MESSAGE_EVENT, message => {
-  addMeesageToChat(message);
-  scrollToBottom();
+socket.on(GET_LAST_MESSAGE_EVENT, message => {
+  addMeesageToChat(messagesElement, message);
+  scrollToBottom(messagesElement);
 });
 
-document.getElementById("chat-form").addEventListener("submit", sendMessage);
+document.querySelector(".chat-form").addEventListener("submit", sendMessage);
 function sendMessage(event) {
   event.preventDefault();
-  if(INPUT_LINE.value.trim()) {
-    SOCKET.emit(ADD_MESSAGE_EVENT, {
+  if(inputLineElement.value.trim()) {
+    socket.emit(ADD_MESSAGE_EVENT, {
       name: USERNAME,
-      content: INPUT_LINE.value
+      content: inputLineElement.value
     });
-    INPUT_LINE.value ='';
+    
+    inputLineElement.value ='';
   }
 }
 
-document.getElementById("sign-out-button").addEventListener("click", () => {
+document.querySelector(".sign-out-button").addEventListener("click", () => {
   window.location.href = "../loginPage/login.html";
 });
 
-SOCKET.emit(USER_CONNECTED_EVENT, USERNAME, ROOM_NAME);
-SOCKET.on(GET_MESSAGES_EVENT, messages => {
+socket.emit(USER_CONNECTED_EVENT, USERNAME, ROOM_NAME);
+socket.on(GET_MESSAGES_EVENT, messages => {
   messages.forEach((message) => {
-    addMeesageToChat(message);
+    addMeesageToChat(messagesElement, message);
   })
-  scrollToBottom();
+  scrollToBottom(messagesElement);
 })
 
-const ROOM_NAME_ELEMENT = document.createElement("h2");
-ROOM_NAME_ELEMENT.setAttribute('id', 'room-name');
-ROOM_NAME_ELEMENT.innerText = ROOM_NAME;
-TITLE_DIV.appendChild(ROOM_NAME_ELEMENT);
+addRoomNameToChat(titleDivElement, ROOM_NAME);

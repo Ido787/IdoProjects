@@ -10,23 +10,23 @@ const {
      GET_ROOM_NAMES,
      ADD_ROOM_TO_LIST,
      RESET_DEFAULT_NAME_EVENT } = require('./serverConsts.js');
-const EXPRESS = require('express');
-const APP = EXPRESS();
+let express = require('express');
+let app = express();
 
-const SERVER = APP.listen(PORT, () => console.log(`Chat is LIVE at ${SERVER_IP}`));
+let server = app.listen(PORT, () => console.log(`Chat is LIVE at ${SERVER_IP}`));
 
-const IO = require('socket.io')(SERVER);
+let io = require('socket.io')(server, {pingTimeout: 2000});
 
-const NAMES = [
+let names = [
 ];
 
-const ROOMS = {
+let rooms = {
     'Default room': []
 };
 
 let isDefaultNameReset = false;
 
-IO.on("connection", socket => {
+io.on("connection", socket => {
     let currRoom;
     let currUsername;
 
@@ -36,46 +36,47 @@ IO.on("connection", socket => {
     }
 
     socket.on(USER_CONNECTED_EVENT, (username, room) => {
-        console.log(`${reverseIfHebrew(username)} connected`);
-        if(!ROOMS.hasOwnProperty(room)) {
-            ROOMS[room] = [];
-            const ROOM_NAMES = Object.keys(ROOMS);
-            IO.emit(ADD_ROOM_TO_LIST, ROOM_NAMES[ROOM_NAMES.length - 1]);
+        console.log(`${reverseIfHebrew(username)} connected to ${room}`);
+        if(!rooms.hasOwnProperty(room)) {
+            rooms[room] = [];
+            const ROOM_NAMES = Object.keys(rooms);
+            io.emit(ADD_ROOM_TO_LIST, ROOM_NAMES[ROOM_NAMES.length - 1]);
         }
         socket.join(room);
-        socket.emit(GET_MESSAGES_EVENT, ROOMS[room]);
+        socket.emit(GET_MESSAGES_EVENT, rooms[room]);
         currUsername = username;
         currRoom = room;
     })
 
     socket.on(GET_LAST_MESSAGE_EVENT, () => {
-        let currMsgs = ROOMS[currRoom];
+        let currMsgs = rooms[currRoom];
         socket.emit(GET_LAST_MESSAGE_EVENT, currMsgs[currMsgs.length - 1]);
     })
 
     socket.on(ADD_MESSAGE_EVENT, message => {
         console.log(`Added ${reverseIfHebrew(message.name)}'s message: ${reverseIfHebrew(message.content)}`);
-        let currMsgs = ROOMS[currRoom];
+        let currMsgs = rooms[currRoom];
         currMsgs.push(message);
-        IO.to(currRoom).emit(GET_LAST_MESSAGE_EVENT, currMsgs[currMsgs.length - 1]);
+        io.to(currRoom).emit(GET_LAST_MESSAGE_EVENT, currMsgs[currMsgs.length - 1]);
     })
     
     socket.on(IS_NAME_EXISTS_EVENT, name => {
-        socket.emit(IS_NAME_EXISTS_EVENT, NAMES.includes(name));
+        socket.emit(IS_NAME_EXISTS_EVENT, names.includes(name));
     })
 
     socket.on(ADD_NAME_EVENT, name => {
-        NAMES.push(name);
+        names.push(name);
     })
 
-    socket.emit(GET_ROOM_NAMES, Object.keys(ROOMS));
+    socket.emit(GET_ROOM_NAMES, Object.keys(rooms));
 
     socket.on("disconnect", () => {
         if(currUsername) {
-            const INDEX = NAMES.indexOf(currUsername);
+            const INDEX = names.indexOf(currUsername);
             if(INDEX > - 1) {
-                NAMES.splice(INDEX, 1);
+                names.splice(INDEX, 1);
             }
+            console.log(`${reverseIfHebrew(currUsername)} disconnected from ${currRoom}`);
             socket.leave(currRoom);
         }
     })
